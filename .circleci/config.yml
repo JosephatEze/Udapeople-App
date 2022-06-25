@@ -80,9 +80,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: front-end-scan-job
+          keys: frontend-scan-job
       - run:
-          name: front-end scan
+          name: scan front-end
           command: |
               cd frontend
               npm install
@@ -90,7 +90,7 @@ jobs:
               npm audit --audit-level=critical      
       - save_cache:
           paths: frontend/node_modules
-          key: front-end-scan-job
+          key: frontend-scan-job
 
 workflows:
   default:
