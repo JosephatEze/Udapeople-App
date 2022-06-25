@@ -51,8 +51,7 @@ jobs:
             cd frontend
             npm install
             npm run test
-          # Your code here 
-          exit 1     
+          # Your code here    
       - save_cache:
           paths: frontend/node_modules
           key: frontend-test-job
