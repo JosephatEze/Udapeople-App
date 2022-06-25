@@ -109,12 +109,7 @@ jobs:
       - save_cache:
           paths: backend/node_modules
           key: backend-scan-job
-
-
-
-
-
-
+          
 workflows:
   default:
     jobs:
@@ -122,12 +117,9 @@ workflows:
       - build-backend
       - test-frontend:
           requires:
-           - build-frontend
+            - build-frontend
       - test-backend:
           requires: 
-            - build-backend
-            - scan-backend:
-          requires:
             - build-backend
       - scan-backend:
           requires:
@@ -135,9 +127,4 @@ workflows:
       - scan-frontend:
           requires: 
             - build-frontend
-      - scan-backend:
-          requires:
-            - build-backend
-     
 
-          
