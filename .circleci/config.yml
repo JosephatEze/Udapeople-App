@@ -74,6 +74,24 @@ jobs:
           paths: backend/node_modules
           key: backend-test-job
 
+  scan-frontend:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys: front-end-scan-job
+      - run:
+          name:  front-end scan
+          command: |
+              cd frontend
+              npm install
+            # npm install oauth-sign@^0.9.0
+              npm audit --audit-level=critical      
+      - save_cache:
+          paths: frontend/node_modules
+          key: front-end-scan-job
+
 workflows:
   default:
     jobs:
@@ -85,5 +103,8 @@ workflows:
       - test-backend:
           requires: 
             - build-backend
+      - scan-frontend:
+          requires: 
+            - build-frontend
 
 
