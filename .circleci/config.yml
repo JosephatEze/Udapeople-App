@@ -79,18 +79,14 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - restore_cache:
-          keys: frontend-scan-job
       - run:
           name: scan front-end
           command: |
               cd frontend
               npm install
             # npm install oauth-sign@^0.9.0
-              npm audit --audit-level=critical      
-      - save_cache:
-          paths: frontend/node_modules
-          key: frontend-scan-job
+              npm audit --audit-level=critical  
+    
 
 workflows:
   default:
