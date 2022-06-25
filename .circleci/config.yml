@@ -80,15 +80,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: frontend-scan-job
+          keys: frontend-analyze
       - run:
+          name: analyze front-end
+          command: |
               cd frontend
               npm install
-            # npm install oauth-sign@^0.9.0
-              npm audit --audit-level=critical      
+          # npm install oauth-sign@^0.9.0
+              npm audit --audit-level=critical
+          # Your code here    
       - save_cache:
           paths: frontend/node_modules
-          key: frontend-scan-job
+          key: frontend-analyze
 
   scan-backend:
     docker:
@@ -96,15 +99,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: backend-scan-job    
+          keys: backend-analyze
       - run:
+          name: analyze back-end
+          command: |
               cd backend
               npm install
           # npm install oauth-sign@^0.9.0
-              npm audit --audit-level=critical      
+              npm audit --audit-level=critical
+          # Your code here    
       - save_cache:
           paths: backend/node_modules
-          key: backend-scan-job
+          key: backend-analyze
     
 
 workflows:
