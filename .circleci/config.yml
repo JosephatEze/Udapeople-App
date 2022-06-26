@@ -24,7 +24,7 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: success_tagged_deloy_1
+          template: basic_success_1
   
       - save_cache:
           paths: frontend/node_modules
@@ -50,7 +50,7 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: success_tagged_deploy_1    
+          template: basic_success_1    
       - save_cache:
           paths: backend/node_modules
           key: backend-build-job
@@ -74,7 +74,7 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: success_tagged_deploy_1   
+          template: basic_success_1   
       - save_cache:
           paths: frontend/node_modules
           key: frontend-test-job
@@ -99,7 +99,7 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: success_tagged_depoy_1     
+          template: basic_success_1     
       - save_cache:
           paths: backend/node_modules
           key: backend-test-job
@@ -125,7 +125,7 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: success_tagged_deploy_1
+          template: basic_success_1
           # npm install oauth-sign@^0.9.0   
           # Your code here    
       - save_cache:
@@ -157,7 +157,7 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: success_tagged_deploy_1
+          template: basic_success_1
           # npm install oauth-sign@^0.9.0
        
       - save_cache:
