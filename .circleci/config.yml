@@ -107,8 +107,6 @@ jobs:
           command: |
               cd backend
               npm install
-              npm install -g npm-check-updates
-              ncu -u
               npm audit fix --audit-level=critical --force
               npm audit --audit-level=critical
           # npm install oauth-sign@^0.9.0
