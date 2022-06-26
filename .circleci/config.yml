@@ -1,5 +1,6 @@
 version: 2.1
-
+orbs: 
+  slack: circleci/slack@4.10.1
 
 jobs:
   build-frontend:
@@ -15,7 +16,14 @@ jobs:
             cd frontend
             npm install
             npm run build
-           # Your code here
+            exit 1
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
   
       - save_cache:
           paths: frontend/node_modules
