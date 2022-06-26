@@ -106,12 +106,11 @@ jobs:
           name: analyze back-end
           command: |
               cd backend
-              npm install --save-dev webpack@5.73.0
+              npm install 
               npm audit fix --audit-level=critical --force
               npm audit --audit-level=critical
           # npm install oauth-sign@^0.9.0
-              
-          # Your code here    
+       
       - save_cache:
           paths: backend/node_modules
           key: backend-analyze
