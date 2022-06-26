@@ -16,13 +16,14 @@ jobs:
             cd frontend
             npm install
             npm run build
-            exit 1
+          
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
           template: basic_fail_1
       - slack/notify:
           event: pass
+          mentions: '@DevelopmentTeam'
           template: success_tagged_build_1
   
       - save_cache:
@@ -42,7 +43,14 @@ jobs:
             cd backend
             npm install
             npm run build
-          # Your code here
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevelopmentTeam'
+          template: success_tagged_build_1    
       - save_cache:
           paths: backend/node_modules
           key: backend-build-job
@@ -59,7 +67,14 @@ jobs:
             cd frontend
             npm install
             npm run test
-          # Your code here    
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevelopmentTeam'
+          template: success_tagged_test_1   
       - save_cache:
           paths: frontend/node_modules
           key: frontend-test-job
@@ -77,7 +92,14 @@ jobs:
             cd frontend
             npm install
             npm run test
-          # Your code here      
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevelopmentTeam'
+          template: success_tagged_build_1     
       - save_cache:
           paths: backend/node_modules
           key: backend-test-job
@@ -96,8 +118,15 @@ jobs:
             npm install
             npm audit fix --audit-level=critical --force
             npm audit --audit-level=critical
-        # npm install oauth-sign@^0.9.0
-            
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevelopmentTeam'
+          template: success_tagged_build_1
+          # npm install oauth-sign@^0.9.0   
           # Your code here    
       - save_cache:
           paths: frontend/node_modules
@@ -121,6 +150,14 @@ jobs:
               npm install 
               npm audit fix --audit-level=critical --force
               npm audit --audit-level=critical
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevelopmentTeam'
+          template: success_tagged_build_1
           # npm install oauth-sign@^0.9.0
        
       - save_cache:
