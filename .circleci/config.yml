@@ -195,7 +195,7 @@ jobs:
 
           command: |
             aws cloudformation \
-            list-exports --query "Exports[?Name==\`PipelineID\`].Value" \
+            list-exports --query "Exports[?Name==\`backendIP\`].Value" \
             --no-paginate --output text > ~/textfile.txt
       - persist_to_workspace:
           root: ~/

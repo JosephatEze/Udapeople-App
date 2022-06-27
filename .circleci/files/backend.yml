@@ -43,4 +43,4 @@ Outputs:
         - PrivateIp
       Description: IP address for backend server
       Export:
-        Name: !Sub backend-${ID}-IP
+        Name: backendIP
