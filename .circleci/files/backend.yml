@@ -40,7 +40,7 @@ Outputs:
   BackendIP:
       Value: !GetAtt 
         - EC2Instance
-        - PrivateIp
+        - PublicIp
       Description: IP address for backend server
       Export:
         Name: backendIP

@@ -196,7 +196,7 @@ jobs:
           parameters:
               Backendip:
           command: |
-            aws cloudformation list-exports --query "Exports[?Name==\`backendIP\`].Value" --no-paginate --output text > ~/inventory.txt
+            aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text > ~/inventory.txt
       - destroy-environment
       - persist_to_workspace:
           root: ~/
