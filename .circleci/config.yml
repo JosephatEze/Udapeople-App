@@ -197,12 +197,12 @@ jobs:
               Backendip:
           command: |
             aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text > ~/inventory.txt
-      - destroy-environment
+      
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt      
-     
+      - destroy-environment
       # Here's where you will add some code to rollback on failure
     
 
