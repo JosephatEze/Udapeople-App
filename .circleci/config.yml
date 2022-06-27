@@ -3,6 +3,23 @@ orbs:
   slack: circleci/slack@4.10.1
   aws-cli: circleci/aws-cli@2.0.3
 
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+    parameters:
+        ID:
+            Description: Unique identifier.
+            Type: String  
+    steps:
+      - run:
+          name: Destroy environments
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack \
+              --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
+            aws cloudformation delete-stack \
+              --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+
 jobs:
   build-frontend:
     docker:
@@ -192,15 +209,16 @@ jobs:
           name: Add back-end ip to ansible inventory
           parameters:
               Backendip:
-
           command: |
             aws cloudformation \
             list-exports --query "Exports[?Name==\`backendIP\`].Value" \
-            --no-paginate --output text > ~/textfile.txt
+            --no-paginate --output text > ~/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+      - run:      
+      - destroy_environment
       # Here's where you will add some code to rollback on failure
     
 
@@ -222,7 +240,11 @@ workflows:
           requires: 
             - build-frontend
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: 
+            - test-frontend
+            - test-backend
+            - scan-frontend
+            - scan-backend
           filters:
             branches:
               only: test-feature-branch
