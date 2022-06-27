@@ -169,7 +169,7 @@ jobs:
     docker:
        - image: amazon/aws-cli
     steps:
-      - checkout- checkout
+      - checkout
       - run:
           name: Ensure back-end infrastructure exists
           command: |
