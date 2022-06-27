@@ -182,6 +182,7 @@ jobs:
        - image: amazon/aws-cli
     steps:
       - checkout
+      - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
           command: |
@@ -196,11 +197,12 @@ jobs:
               Backendip:
           command: |
             aws cloudformation list-exports --query "Exports[?Name==\`backendIP\`].Value" --no-paginate --output text > ~/inventory.txt
+      - destroy-environment
       - persist_to_workspace:
           root: ~/
           paths:
-            - "project/.circleci/ansible/inventory.txt"      
-      - destroy-environment
+            - project/.circleci/ansible/inventory.txt      
+     
       # Here's where you will add some code to rollback on failure
     
 
