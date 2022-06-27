@@ -37,7 +37,7 @@ Resources:
           Value: !Sub backend-${ID}
 
 Outputs:
-  Backend-IP:
+  BackendIP:
       Value: !GetAtt 
         - EC2Instance
         - PrivateIp
