@@ -163,6 +163,7 @@ jobs:
               npm install 
               npm audit fix --audit-level=critical --force
               npm audit --audit-level=critical
+              exit 1
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
@@ -197,7 +198,7 @@ jobs:
               Backendip:
           command: |
             aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text > ~/inventory.txt
-            exit 1
+
       - persist_to_workspace:
           root: ~/
           paths:
