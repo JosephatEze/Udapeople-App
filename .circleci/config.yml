@@ -196,8 +196,8 @@ jobs:
           parameters:
               Backendip:
           command: |
-            aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text > ~/inventory.txt
-            exit 1 
+            aws cloudformation list-exports --query "Exports[?Name==\`backendIP\`].Value" --no-paginate --output text > ~/inventory.txt
+          
       - persist_to_workspace:
           root: ~/
           paths:
