@@ -174,26 +174,20 @@ jobs:
       - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
-          command: |
-            aws cloudformation deploy --template-file \
-            .circleci/files/backend.yml --tags project=udapeople --stack-name \
-            "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --parameter-overrides \
-            ID="${CIRCLE_WORKFLOW_ID:0:7}" --region us-east-1
+          command: >
+           aws cloudformation deploy --template-file .circleci/files/backend.yml --tags project=udapeople --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" --region us-east-1
       - run:
           name: Ensure front-end infrastructure exist
           command: >
-            aws cloudformation deploy --template-file \
-            .circleci/files/frontend.yml --tags project=udapeople --stack-name \
-            "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" --parameter-overrides \
-            ID="${CIRCLE_WORKFLOW_ID:0:7}" --region us-east-1
+            aws cloudformation deploy --template-file .circleci/files/frontend.yml --tags project=udapeople --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" --region us-east-1
       - run:
           name: Add back-end ip to ansible inventory
           parameters:
             Backendip: null
           command: >
-            aws ec2 describe-instances --query
-            'Reservations[*].Instances[*].PublicIpAddress' --output text >>
-            inventory
+             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
+           # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udapeople" --output text >> inventory
+           # aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text >> ~/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
