@@ -36,10 +36,11 @@
     path: ~/web
     state: directory
 
-- name: Copy index test page
+- name: Copy backend folder
   template:
-    src: "files/index.js"
-    dest: "~/web/index.js"
+   # src: "files/index.js"
+    src: backend
+    dest: "~/web"
 
 - name: Executing node
   shell: |
