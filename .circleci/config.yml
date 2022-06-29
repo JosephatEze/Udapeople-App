@@ -205,11 +205,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: 'aa:1f:b6:78:3b:c5:61:91:4a:e0:97:9f:32:62:1c:ef'
-      - attach_workspace:
-          root: ~/
-          paths:
-            - project/.circleci/ansible/inventory.txt
+          fingerprints:  ["aa:1f:b6:78:3b:c5:61:91:4a:e0:97:9f:32:62:1c:ef"] 
       - run:
           name: Install dependencies
           command: |
@@ -218,7 +214,7 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i inventory.txt configure-server.yml
-            ansible-playbook -i inventory.txt deploy-backend.yml
+           # ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
 workflows:
   default:
