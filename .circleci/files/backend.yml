@@ -34,8 +34,9 @@ Resources:
       ImageId: ami-068663a3c619dd892 
       Tags:
         - Key: Name
-          Value: udapeople-backend-server # !Sub backend-${ID}
-
+          Value: !Sub backend-${ID}
+        - Key: project
+          Value: udapeople-backend-server 
 #Outputs:
   #BackendIP:
     # Value: !GetAtt 

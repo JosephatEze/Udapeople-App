@@ -196,7 +196,7 @@ jobs:
           parameters:
               Backendip:
           command: |
-            aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=udapeople-backend-server" --output text >> inventory
+            aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople-backend-server" --output text >> inventory
             cat .circleci/ansible/inventory.txt 
            # aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
            # aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text >> ~/inventory.txt    
@@ -205,6 +205,9 @@ jobs:
           paths:
             - project/.circleci/ansible/inventory.txt      
       - destroy-environment
+      - save_cache:
+          paths: .circleci/files
+          key: infrastructure-deployment
       # Here's where you will add some code to rollback on failure
 
   configure-infrastructure:
@@ -213,6 +216,8 @@ jobs:
       # Docker image here that supports Ansible
     steps:
       - checkout
+      - restore_cache:
+          keys: infrastructure-configuration
       - add_ssh_keys:
           fingerprints: aa:1f:b6:78:3b:c5:61:91:4a:e0:97:9f:32:62:1c:ef
       - run:
@@ -225,6 +230,9 @@ jobs:
              ansible-playbook -i .circleci/ansible/inventory.txt .circleci/ansible/configure-server.yml
             # ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
+      - save_cache:
+          paths: .circleci/files
+          key: infrastructure-configuration
       # Here's where you will add some code to rollback on failure         
 workflows:
   default:
