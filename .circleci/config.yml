@@ -215,7 +215,7 @@ jobs:
           command: |
             ansible-playbook -i inventory.txt configure-server.yml
            # ansible-playbook -i inventory.txt deploy-backend.yml
-      - destroy-environment
+       - destroy-environment
 workflows:
   default:
     jobs:
