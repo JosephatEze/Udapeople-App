@@ -36,11 +36,11 @@ Resources:
         - Key: Name
           Value: !Sub backend-${ID}
 
-Outputs:
-  BackendIP:
-      Value: !GetAtt 
-        - EC2Instance
-        - PublicIp
-      Description: IP address for backend server
-      Export:
-        Name: backendIP
+#Outputs:
+  #BackendIP:
+    # Value: !GetAtt 
+       # - EC2Instance
+       # - PublicIp
+     # Description: IP address for backend server
+     # Export:
+       # Name: backendIP
