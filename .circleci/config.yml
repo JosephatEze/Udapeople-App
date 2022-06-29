@@ -1,7 +1,8 @@
 version: 2.1
-orbs:
+orbs: 
   slack: circleci/slack@4.10.1
   aws-cli: circleci/aws-cli@2.0.3
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -10,11 +11,14 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+            aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
+            aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"
+
+ 
 jobs:
   build-frontend:
     docker:
-      - image: 'circleci/node:13.8.0'
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -25,6 +29,7 @@ jobs:
             cd frontend
             npm install
             npm run build
+          
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
@@ -33,12 +38,14 @@ jobs:
           event: pass
           mentions: '@DevelopmentTeam'
           template: basic_success_1
+  
       - save_cache:
           paths: frontend/node_modules
           key: frontend-build-job
+
   build-backend:
     docker:
-      - image: 'circleci/node:13.8.0'
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -56,13 +63,13 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: basic_success_1
+          template: basic_success_1    
       - save_cache:
           paths: backend/node_modules
           key: backend-build-job
   test-frontend:
     docker:
-      - image: 'circleci/node:13.8.0'
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -80,13 +87,14 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: basic_success_1
+          template: basic_success_1   
       - save_cache:
           paths: frontend/node_modules
           key: frontend-test-job
+                
   test-backend:
     docker:
-      - image: 'circleci/node:13.8.0'
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -104,13 +112,14 @@ jobs:
       - slack/notify:
           event: pass
           mentions: '@DevelopmentTeam'
-          template: basic_success_1
+          template: basic_success_1     
       - save_cache:
           paths: backend/node_modules
           key: backend-test-job
+
   scan-frontend:
     docker:
-      - image: 'circleci/node:13.8.0'
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -130,12 +139,15 @@ jobs:
           event: pass
           mentions: '@DevelopmentTeam'
           template: basic_success_1
+          # npm install oauth-sign@^0.9.0   
+          # Your code here    
       - save_cache:
           paths: frontend/node_modules
           key: frontend-scan
+
   scan-backend:
     docker:
-      - image: 'circleci/node:13.8.0'
+      - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
@@ -143,14 +155,15 @@ jobs:
       - run:
           name: analyze back-end
           command: |
-            cd backend
-            npm install --save-dev webpack@5.73.0
-            npm update mkdirp --depth 6
-            npm update path-parse --depth 10
-            npm update kind-of --depth 14
-            npm install 
-            npm audit fix --audit-level=critical --force
-            npm audit --audit-level=critical
+              cd backend
+              npm install --save-dev webpack@5.73.0
+              npm update mkdirp --depth 6
+              npm update path-parse --depth 10
+              npm update kind-of --depth 14
+              npm install 
+              npm audit fix --audit-level=critical --force
+              npm audit --audit-level=critical
+              
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
@@ -159,19 +172,22 @@ jobs:
           event: pass
           mentions: '@DevelopmentTeam'
           template: basic_success_1
+          # npm install oauth-sign@^0.9.0
+       
       - save_cache:
           paths: backend/node_modules
           key: backend-scan
+
   deploy-infrastructure:
     docker:
-      - image: amazon/aws-cli
+       - image: amazon/aws-cli
     steps:
       - checkout
       - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists
           command: |
-           aws cloudformation deploy --template-file .circleci/files/backend.yml --tags project=udapeople --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" --region us-east-1
+            aws cloudformation deploy --template-file .circleci/files/backend.yml --tags project=udapeople --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" --region us-east-1
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -179,33 +195,39 @@ jobs:
       - run:
           name: Add back-end ip to ansible inventory
           parameters:
-            Backendip: null
+              Backendip:
           command: |
-             aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
+            aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
            # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Project,Values=udapeople" --output text >> inventory
            # aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text >> ~/inventory.txt
+
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/.circleci/ansible/inventory.txt
+            - project/.circleci/ansible/inventory.txt  
+         
       - destroy-environment
+      # Here's where you will add some code to rollback on failure
+
   configure-infrastructure:
     docker:
-      - image: 'python:3.7-alpine3.11'
+        - image: python:3.7-alpine3.11
+      # Docker image here that supports Ansible
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints:  ["aa:1f:b6:78:3b:c5:61:91:4a:e0:97:9f:32:62:1c:ef"] 
+          fingerprints: aa:1f:b6:78:3b:c5:61:91:4a:e0:97:9f:32:62:1c:ef
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+             apk add --update ansible
       - run:
           name: Configure server
           command: |
-            ansible-playbook -i inventory.txt configure-server.yml
-           # ansible-playbook -i inventory.txt deploy-backend.yml
+             ansible-playbook -i inventory.txt configure-server.yml
+            # ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
+      # Here's where you will add some code to rollback on failure         
 workflows:
   default:
     jobs:
@@ -215,16 +237,16 @@ workflows:
           requires:
             - build-frontend
       - test-backend:
-          requires:
+          requires: 
             - build-backend
       - scan-backend:
           requires:
             - build-backend
       - scan-frontend:
-          requires:
+          requires: 
             - build-frontend
       - deploy-infrastructure:
-          requires:
+          requires: 
             - test-frontend
             - test-backend
             - scan-frontend
@@ -233,5 +255,5 @@ workflows:
             branches:
               only: master
       - configure-infrastructure:
-          requires:
+          requires: 
             - deploy-infrastructure
