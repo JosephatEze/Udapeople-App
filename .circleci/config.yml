@@ -196,8 +196,12 @@ jobs:
          # parameters:
              # Backendip:
           command: | 
-             aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text >> .circleci/ansible/inventory.txt 
-             cat .circleci/ansible/inventory.txt 
+             backendip = $(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople" --output=text )
+             echo "[web]" > .circleci/ansible/inventory.txt 
+             echo "backendip" >> .circleci/ansible/inventory.txt 
+            # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text > .circleci/ansible/inventory.txt 
+           #  cat .circleci/ansible/inventory.txt 
+           
            # yum update
             # yum install -y python3-pip python3 python3-setuptools
             # pip3 install boto3 --user
