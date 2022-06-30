@@ -199,7 +199,8 @@ jobs:
             cat /etc/*-release
             yum install python3 -y
             yum install python3-pip -y
-            pip3 install boto3
+            yum install python-boto3
+           # pip3 install boto3
           # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
           # cat .circleci/ansible/inventory.txt 
            # aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
@@ -232,7 +233,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-             ansible-playbook -i .circleci/ansible/aws_ec2.yml .circleci/ansible/configure-server.yml
+             ansible-playbook -i .circleci/ansible/inventory/aws_ec2.yml .circleci/ansible/configure-server.yml
              ansible-inventory -i demo.aws_ec2.yml --graph
             # cat .circleci/ansible/aws_ec2.yml
             # ansible-playbook -i inventory.txt deploy-backend.yml
