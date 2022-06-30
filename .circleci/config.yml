@@ -196,17 +196,12 @@ jobs:
          # parameters:
              # Backendip:
           command: | 
-             yum update
-             yum install -y python3-pip python3 python3-setuptools
-             pip3 install boto3 --user
-             
-            # yum install python3 -y
-            # yum install python3-pip -y
-            # yum install python-boto3
+             aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
+             cat .circleci/ansible/inventory.txt 
+           # yum update
+            # yum install -y python3-pip python3 python3-setuptools
+            # pip3 install boto3 --user
           # cat /etc/*-release
-           # pip3 install boto3 — — user
-          # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
-          # cat .circleci/ansible/inventory.txt 
            # aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
            # aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text >> ~/inventory.txt    
            # python and boto are installed for invetory plugin
@@ -234,6 +229,9 @@ jobs:
           name: Install dependencies
           command: |
              apk add --update ansible
+             yum update
+             yum install -y python3-pip python3 python3-setuptools
+             pip3 install boto3 --user
       - run:
           name: Configure server
           command: |
