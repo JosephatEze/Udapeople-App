@@ -197,8 +197,8 @@ jobs:
              # Backendip:
           command: |
             cat /etc/*-release
-            apt-get install python3 -y
-            apt-get install python3-pip -y
+            yum install python3 -y
+            yum install python3-pip -y
             pip3 install boto3
           # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
           # cat .circleci/ansible/inventory.txt 
