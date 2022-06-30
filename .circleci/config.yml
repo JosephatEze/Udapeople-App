@@ -198,12 +198,7 @@ jobs:
           command: | 
              echo "[web]" > .circleci/ansible/inventory.txt  
              aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text >> .circleci/ansible/inventory.txt 
-             cat .circleci/ansible/inventory.txt 
-           # yum update
-            # yum install -y python3-pip python3 python3-setuptools
-            # pip3 install boto3 --user
-          # cat /etc/*-release 
-           # uncomment python and boto commands to installed for dynamic invetory plugin
+             cat .circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -227,10 +222,12 @@ jobs:
       - run:
           name: Install dependencies
           command: |   
-             yum update
-             yum install -y python3-pip python3 python3-setuptools
-             pip3 install boto3 --user
              apk add --update ansible
+           # yum update
+           # yum install -y python3-pip python3 python3-setuptools
+           # pip3 install boto3 --user
+           # cat /etc/*-release 
+           # uncomment python and boto commands to installed for dynamic invetory plugin
       - run:
           name: Configure server
           command: |
