@@ -1,0 +1,16 @@
+plugin: aws_ec2
+regions: 
+    - us-east-1
+keyed_groups:
+     - key: tags.udapeople
+       separator: ''
+hostname: network-interface.association.public-ip
+#hostname_variable = tag_udapeople
+#cache_path = ~/.circleci/ansible
+#cache_max_age = 300
+instance_filters = tag:project=udapeople
+cache: yes
+cache_plugin: ansible.builtin.jsonfile
+cache_timeout: 7200
+cache_connection: /.circleci/ansible
+cache_prefix: aws_ec2

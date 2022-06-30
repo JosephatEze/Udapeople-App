@@ -36,7 +36,7 @@ Resources:
         - Key: Name
           Value: !Sub backend-${ID}
         - Key: project
-          Value: udapeople-backend-server 
+          Value: udapeople 
 #Outputs:
   #BackendIP:
     # Value: !GetAtt 
