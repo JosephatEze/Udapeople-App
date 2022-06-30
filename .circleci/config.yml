@@ -277,7 +277,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-             BACKEND_IP="aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text"
+            BACKEND_IP="aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text"
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
       - run:
