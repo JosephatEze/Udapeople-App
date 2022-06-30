@@ -196,19 +196,14 @@ jobs:
          # parameters:
              # Backendip:
           command: | 
-             backendip = $(aws ec2 describe-instances --query "Reservations[*].Instances[*].PublicIpAddress" --filters "Name=tag:project,Values=udapeople" --output=text )
-             echo "[web]" > .circleci/ansible/inventory.txt 
-             echo "backendip" >> .circleci/ansible/inventory.txt 
-            # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text > .circleci/ansible/inventory.txt 
-           #  cat .circleci/ansible/inventory.txt 
-           
+             echo "[web]" > .circleci/ansible/inventory.txt  
+             aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text >> .circleci/ansible/inventory.txt 
+             cat .circleci/ansible/inventory.txt 
            # yum update
             # yum install -y python3-pip python3 python3-setuptools
             # pip3 install boto3 --user
-          # cat /etc/*-release
-           # aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
-           # aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text >> ~/inventory.txt    
-           # python and boto are installed for invetory plugin
+          # cat /etc/*-release 
+           # uncomment python and boto commands to installed for dynamic invetory plugin
       - persist_to_workspace:
           root: ~/
           paths:
