@@ -9,7 +9,7 @@ ansible_host: private_ip_address
 #hostname_variable = tag_udapeople
 #cache_path = ~/.circleci/ansible
 #cache_max_age = 300
-instance_filters = tag:project=udapeople
+instance_filters: tag:project=udapeople
 cache: yes
 cache_plugin: ansible.builtin.jsonfile
 cache_timeout: 7200
