@@ -195,11 +195,14 @@ jobs:
           name: Add back-end ip to ansible inventory
          # parameters:
              # Backendip:
-          command: |
-            cat /etc/*-release
-            yum install python3 -y
-            yum install python3-pip -y
-            yum install python-boto3
+          command: | 
+             sudo yum update
+             sudo yum install -y python3-pip python3 python3-setuptools
+             pip3 install boto3 — — user
+            # yum install python3 -y
+            # yum install python3-pip -y
+            # yum install python-boto3
+          # cat /etc/*-release
            # pip3 install boto3
           # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
           # cat .circleci/ansible/inventory.txt 
