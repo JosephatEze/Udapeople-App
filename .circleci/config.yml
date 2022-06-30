@@ -193,12 +193,13 @@ jobs:
             aws cloudformation deploy --template-file .circleci/files/frontend.yml --tags project=udapeople --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}" --region us-east-1
       - run:
           name: Add back-end ip to ansible inventory
-          parameters:
-              Backendip:
+         # parameters:
+             # Backendip:
           command: |
-             apt-get install python3 -y
-             apt-get install python3-pip -y
-             pip3 install boto3
+            cat /etc/*-release
+            apt-get install python3 -y
+            apt-get install python3-pip -y
+            pip3 install boto3
           # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
           # cat .circleci/ansible/inventory.txt 
            # aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
