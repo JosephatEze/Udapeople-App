@@ -232,7 +232,8 @@ jobs:
           name: Configure server
           command: |
              ansible-playbook -i .circleci/ansible/aws_ec2.yml .circleci/ansible/configure-server.yml
-             cat .circleci/ansible/aws_ec2.yml
+             ansible-inventory -i demo.aws_ec2.yml --graph
+            # cat .circleci/ansible/aws_ec2.yml
             # ansible-playbook -i inventory.txt deploy-backend.yml
       - destroy-environment
       - save_cache:

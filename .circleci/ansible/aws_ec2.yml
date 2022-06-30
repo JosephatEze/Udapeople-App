@@ -4,7 +4,8 @@ regions:
 keyed_groups:
      - key: tags.udapeople
        separator: ''
-hostname: network-interface.association.public-ip
+ansible_host: private_ip_address
+#hostname: network-interface.association.public-ip
 #hostname_variable = tag_udapeople
 #cache_path = ~/.circleci/ansible
 #cache_max_age = 300
