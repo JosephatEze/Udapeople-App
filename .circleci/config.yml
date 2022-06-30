@@ -199,8 +199,8 @@ jobs:
             sudo apt-get install python3 -y
             sudo apt-get install python3-pip -y
             sudo pip3 install boto3
-            aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
-            cat .circleci/ansible/inventory.txt 
+          # aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output text >> inventory
+          # cat .circleci/ansible/inventory.txt 
            # aws ec2 describe-instances --query 'Reservations[*].Instances[*].PublicIpAddress' --output text >> inventory.txt
            # aws cloudformation list-exports --query "Exports[?Name==\`BackendIP\`].Value" --no-paginate --output text >> ~/inventory.txt    
            # python and boto are installed for invetory plugin
