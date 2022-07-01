@@ -4,18 +4,18 @@ orbs:
   aws-cli: circleci/aws-cli@2.0.3
 commands:
   destroy-environment:
-    description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
-    parameters:
-      workflow_id:
-        type: string 
-    steps:
-      - run:
-          name: Destroy environments
-          when: on_fail
-          command: |
-            echo "Destroying environment: << parameters.workflow_id >> "
-            aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
-            aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" 
+  description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
+  parameters:
+    workflow_id:
+      type: string 
+  steps:
+    - run:
+        name: Destroy environments
+        when: on_fail
+        command: |
+          echo "Destroying environment: << parameters.workflow_id >> "
+          aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
+          aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" 
   revert-migrations:
   description: Revert the last migration if successfully run in the current workflow.
   parameters:
