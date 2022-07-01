@@ -277,7 +277,7 @@ jobs:
       - destroy-environment
       - save_cache:
           paths: backend/node_modules
-          key: backend-migration
+          key: backend-build-job
      # Here's where you will add some code to rollback on failure  
   deploy-frontend:
     docker:
