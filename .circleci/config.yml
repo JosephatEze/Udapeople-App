@@ -433,9 +433,7 @@ jobs:
                 aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
                 aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
                 aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
-              fi
-            
-            
+              fi        
 workflows:
   default:
     jobs:
@@ -475,7 +473,9 @@ workflows:
           requires: 
             - run-migrations
       - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
+          requires: 
+            - deploy-backend
+            - deploy-frontend
       - cloudfront-update:
           requires: 
             - smoke-test
