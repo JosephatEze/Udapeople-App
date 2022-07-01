@@ -246,6 +246,9 @@ jobs:
           command: |
             cd backend
             npm install
+            npm run build
+            npm run test
+            npm audit fix --audit-level=critical --force
             npm run migrations > migrations_dump.txt
           # Run and save the migration output
       - run:
@@ -287,6 +290,7 @@ jobs:
             cd frontend
             npm install
             npm run build
+            npm audit fix --audit-level=critical --force
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
