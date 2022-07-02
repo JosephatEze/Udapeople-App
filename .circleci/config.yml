@@ -86,7 +86,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: frontend-build-job
+          keys: frontend-test-job
       - run:
           name: test front-end
           command: |
@@ -111,9 +111,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: backend-build-job
-     # - restore_cache:
-      #    keys: backend-test-job
+          keys: backend-test-job
       - run:
           name: test back-end
           command: |
@@ -130,14 +128,15 @@ jobs:
           template: basic_success_1     
       - save_cache:
           paths: backend/node_modules
-          keys: backend-test-job
+          key: backend-test-job
+
   scan-frontend:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
-          keys: frontend-build-job
+          keys: frontend-scan
       - run:
           name: analyze front-end
           command: |
@@ -165,7 +164,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: [backend-build-job]
+          keys: backend-scan
       - run:
           name: analyze back-end
           command: |
@@ -176,7 +175,8 @@ jobs:
               npm update kind-of --depth 14
               npm install 
               npm audit fix --audit-level=critical --force
-              npm audit --audit-level=critical          
+              npm audit --audit-level=critical
+              
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
@@ -185,10 +185,11 @@ jobs:
           event: pass
           mentions: '@DevelopmentTeam'
           template: basic_success_1
-          # npm install oauth-sign@^0.9.0  
+          # npm install oauth-sign@^0.9.0
+       
       - save_cache:
-          paths: [backend/node_modules]
-          keys: backend-scan
+          paths: backend/node_modules
+          key: backend-scan
 
   deploy-infrastructure:
     docker:
@@ -255,13 +256,16 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: backend-build-job # backend-migration-cache
+          keys: backend-build-job # backend-migration
       - run:
           name: Run migrations
           command: |
             cd backend
             npm install  
             npm run migrations > migrations_dump.txt
+          #  npm run build
+          #  npm run test
+          #  npm audit fix --audit-level=critical --force
           #  Run and save the migration output
       - run:
           name: Send migration results to kvdb.io
@@ -273,7 +277,10 @@ jobs:
                 # If you are using memstash.io, generate the token "7933fe63-4687-4fa1-8426-aa25aa1730ec" on the website
                 # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first    
             fi
-      - revert-migrations
+      - destroy-environment
+      - save_cache:
+          paths: backend/node_modules
+          key: backend-migration
      # Here's where you will add some code to rollback on failure  
   deploy-frontend:
     docker:
