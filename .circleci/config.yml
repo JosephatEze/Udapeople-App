@@ -178,9 +178,9 @@ jobs:
               npm audit fix --audit-level=critical --force
               npm audit --audit-level=critical
       - persist_to_workspace:
-          root: ~/project
+          root: .
           paths:
-            - ~/project/backend        
+            - .       
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
@@ -260,7 +260,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/project
+          at: .
       #- restore_cache:
        #   keys: backend-migration 
       - run:
