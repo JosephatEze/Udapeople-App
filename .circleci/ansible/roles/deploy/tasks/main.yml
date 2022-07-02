@@ -40,12 +40,12 @@
   template:
     
    # src: "files/index.js"
-    src: backend/
-    dest: "~/web"
+    src: ~/backend
+    dest: "~/"    # web"
 
 - name: Executing node
   shell: |
-    cd ~/web
+    cd ~/
     tar -C backend -xzvf artifact.tar.gz .
     npm install
     pm2 stop default
