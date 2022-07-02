@@ -37,17 +37,17 @@
     state: directory
 
 - name: Copy backend folder
-  template:
-    
+  template:  
    # src: "files/index.js"
-    remote_src: ~/backend
+    src: ~/backend
     dest: "~/"    # web"
-
+    remote_src: true
 - name: Executing node
   shell: |
     cd ~/
-    tar -C backend -xzvf artifact.tar.gz .
+    tar -xzvf artifact.tar.gz -C .
     npm install
     pm2 stop default
     pm2 start npm -- start
    # pm2 start ~/web/index.js -f
+   #tar -C backend -xzvf artifact.tar.gz .
