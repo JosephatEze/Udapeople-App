@@ -180,7 +180,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project
           paths:
-            - project/backend        
+            - ~/project/backend        
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
