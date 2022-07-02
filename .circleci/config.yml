@@ -86,7 +86,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: frontend-test-job
+          keys: frontend-build-job
       - run:
           name: test front-end
           command: |
@@ -130,16 +130,14 @@ jobs:
           template: basic_success_1     
       - save_cache:
           paths: backend/node_modules
-          keys: backend-build-job
-          #key: backend-test-job
-
+          keys: backend-test-job
   scan-frontend:
     docker:
       - image: circleci/node:13.8.0
     steps:
       - checkout
       - restore_cache:
-          keys: frontend-scan
+          keys: frontend-build-job
       - run:
           name: analyze front-end
           command: |
@@ -168,7 +166,6 @@ jobs:
       - checkout
       - restore_cache:
           keys: backend-build-job
-        # keys: backend-scan
       - run:
           name: analyze back-end
           command: |
@@ -179,8 +176,7 @@ jobs:
               npm update kind-of --depth 14
               npm install 
               npm audit fix --audit-level=critical --force
-              npm audit --audit-level=critical
-              
+              npm audit --audit-level=critical          
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
