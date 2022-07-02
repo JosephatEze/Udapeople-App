@@ -296,8 +296,10 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum install -y tar gzip
+            apk add --update ansible
+            pip install awscli
             apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
+          #yum install -y tar gzip
           #apk add --update nodejs
           #npm tar gzip curl
       - run:
@@ -336,8 +338,8 @@ jobs:
           command: |
             apk add --update ansible
             pip install awscli
-            yum install -y tar gzip
             aws --version
+           # yum install -y tar gzip
            #yum install -y python3-pip python3 python3-setuptools
            # pip3 install awscli
            # apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
