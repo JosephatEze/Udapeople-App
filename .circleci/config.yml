@@ -111,7 +111,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: backend-test-job
+          keys: backend-build-job
+     # - restore_cache:
+      #    keys: backend-test-job
       - run:
           name: test back-end
           command: |
@@ -128,7 +130,8 @@ jobs:
           template: basic_success_1     
       - save_cache:
           paths: backend/node_modules
-          key: backend-test-job
+            keys: backend-build-job
+          #key: backend-test-job
 
   scan-frontend:
     docker:
@@ -164,7 +167,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys: backend-scan
+          keys: backend-build-job
+     # - restore_cache:
+      #    keys: backend-scan
       - run:
           name: analyze back-end
           command: |
@@ -189,7 +194,8 @@ jobs:
        
       - save_cache:
           paths: backend/node_modules
-          key: backend-scan
+          keys: backend-build-job
+        #  key: backend-scan
 
   deploy-infrastructure:
     docker:
