@@ -335,6 +335,7 @@ jobs:
           command: |
             apk add --update ansible
             yum install -y tar gzip
+            pip install awscli
       - run:
           name: Deploy backend
           command: |
