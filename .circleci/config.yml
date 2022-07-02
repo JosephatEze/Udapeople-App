@@ -189,8 +189,7 @@ jobs:
           event: pass
           mentions: '@DevelopmentTeam'
           template: basic_success_1
-          # npm install oauth-sign@^0.9.0
-       
+          # npm install oauth-sign@^0.9.0  
       - save_cache:
           paths: backend/node_modules
           key: backend-scan
@@ -284,9 +283,9 @@ jobs:
                 # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first    
             fi
       - destroy-environment
-      - save_cache:
-          paths: backend/node_modules
-          key: backend-migration
+      #- save_cache:
+      #    paths: backend/node_modules
+      #    key: backend-migration
      # Here's where you will add some code to rollback on failure  
   deploy-frontend:
     docker:
