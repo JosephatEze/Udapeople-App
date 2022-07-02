@@ -259,7 +259,7 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - persist_to_workspace:
+      - attach_workspace:
           root: ~/project
       - restore_cache:
           keys: backend-migration # backend-migration
