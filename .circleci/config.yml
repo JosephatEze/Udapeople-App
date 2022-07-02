@@ -286,7 +286,8 @@ jobs:
      # Here's where you will add some code to rollback on failure  
   deploy-frontend:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.11
+      #- image: amazon/aws-cli
       # Docker image here that supports AWS CLI
     steps:
       - checkout
@@ -334,9 +335,11 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
+            pip install awscli
             yum install -y tar gzip
-            yum install -y python3-pip python3 python3-setuptools
-            pip3 install awscli
+            aws --version
+           #yum install -y python3-pip python3 python3-setuptools
+           # pip3 install awscli
            # apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
       - run:
           name: Deploy backend
