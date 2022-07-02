@@ -177,10 +177,10 @@ jobs:
               npm install 
               npm audit fix --audit-level=critical --force
               npm audit --audit-level=critical
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .       
+      #- persist_to_workspace:
+        #  root: .
+        #  paths:
+         #   - .       
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
@@ -258,18 +258,22 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
-      - attach_workspace:
-          at: .
-      #- restore_cache:
-       #   keys: backend-migration 
+      - restore_cache:
+          keys: backend-migration 
       - run:
           name: Run migrations
           command: |
             cd backend
-            npm install  
+            npm run build
+            npm run test
+            npm install --save-dev webpack@5.73.0
+            npm update mkdirp --depth 6
+            npm update path-parse --depth 10
+            npm update kind-of --depth 14
+            npm install 
+            npm audit fix --audit-level=critical --force
+            npm audit --audit-level=critical
             npm run migrations > migrations_dump.txt
-          #  npm run build
-          #  npm run test
           #  npm audit fix --audit-level=critical --force
           #  Run and save the migration output
       - run:
