@@ -38,10 +38,10 @@
 
 - name: Copy backend folder
   template:  
-   # src: "files/index.js"
-    src: ~/backend
+    src: ~/artifact.tar.gz
     dest: "~/"    # web"
-    remote_src: true
+    # src: "files/index.js"
+    #remote_src: true
 - name: Executing node
   shell: |
     cd ~/

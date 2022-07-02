@@ -321,6 +321,12 @@ jobs:
             npm audit fix 
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      - run:
+          name: delete bucket objects
+          when: on_fail
+          command: |
+            aws s3api delete-objects --bucket ${bucket_name} --delete "$(aws s3api list-object-versions --bucket "${bucket_name}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
+           # aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
       - destroy-environment
       # Here's where you will add some code to rollback on failure   
   deploy-backend:
@@ -354,6 +360,7 @@ jobs:
             npm run build
             cd ..
             tar -C backend -czvf artifact.tar.gz .
+            cp ./artifact.tar.gz .circleci/ansible
             cd .circleci/ansible
             echo "Contents of the inventory.txt file is -------"
             cat inventory.txt
@@ -362,7 +369,8 @@ jobs:
           name: delete bucket objects
           when: on_fail
           command: |
-            aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+            aws s3api delete-objects --bucket ${bucket_name} --delete "$(aws s3api list-object-versions --bucket "${bucket_name}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
+           # aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
       - destroy-environment
       # Here's where you will add some code to rollback on failure  
   smoke-test:
