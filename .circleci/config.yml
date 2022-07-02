@@ -359,10 +359,10 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
       - run:
-        name: delete bucket objects
-        when: on_fail
-        command: |
-          aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+          name: delete bucket objects
+          when: on_fail
+          command: |
+            aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
       - destroy-environment
       # Here's where you will add some code to rollback on failure  
   smoke-test:
