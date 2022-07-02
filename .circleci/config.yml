@@ -176,11 +176,7 @@ jobs:
               npm update kind-of --depth 14
               npm install 
               npm audit fix --audit-level=critical --force
-              npm audit --audit-level=critical
-      #- persist_to_workspace:
-        #  root: .
-        #  paths:
-         #   - .       
+              npm audit --audit-level=critical       
       - slack/notify:
           event: fail
           mentions: '@DevelopmentTeam'
@@ -242,6 +238,7 @@ jobs:
           name: Install dependencies
           command: |   
              apk add --update ansible
+             pip install awscli
            # yum update
            # yum install -y python3-pip python3 python3-setuptools
            # pip3 install boto3 --user
@@ -280,7 +277,8 @@ jobs:
                 # If you are using memstash.io, generate the token "7933fe63-4687-4fa1-8426-aa25aa1730ec" on the website
                 # If you are using kvdb.io, generate the bucket ID "9GE4jRtKznmVKRfvdBABBe" in your local terminal first    
             fi
-      - destroy-environment
+      - revert-migrations
+      #- destroy-environment
       #- save_cache:
       #    paths: backend/node_modules
       #    key: backend-migration
@@ -291,10 +289,14 @@ jobs:
       # Docker image here that supports AWS CLI
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             yum install -y tar gzip
+            apk add --update nodejs
+            npm tar gzip curl
       - run:
           name: Get backend url
           command: |
@@ -314,10 +316,7 @@ jobs:
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
       # npm audit fix --audit-level=critical --force
-      # Here's where you will add some code to rollback on failure 
-      - save_cache:
-          paths: .circleci/files
-          key: frontend-deployment  
+      # Here's where you will add some code to rollback on failure   
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11
