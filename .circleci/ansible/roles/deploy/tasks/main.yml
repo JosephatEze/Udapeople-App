@@ -40,7 +40,7 @@
   template:
     
    # src: "files/index.js"
-    src: ~/backend
+    remote_src: ~/backend
     dest: "~/"    # web"
 
 - name: Executing node
