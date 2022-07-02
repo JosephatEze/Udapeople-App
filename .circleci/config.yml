@@ -239,9 +239,10 @@ jobs:
           command: |   
              apk add --update ansible
              pip install awscli
-             aws --version
-       #- run: apt-get install -y python3-pip python3 python3-setuptools
-      # - run: pip3 install awscli
+           # aws --version
+           # apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install awscli && rm -rf /var/cache/apk/*
+           #- run: apt-get install -y python3-pip python3 python3-setuptools
+           # - run: pip3 install awscli
            # yum update
            # yum install -y python3-pip python3 python3-setuptools
            # pip3 install boto3 --user
