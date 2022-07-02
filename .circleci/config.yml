@@ -260,7 +260,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          root: ~/project
+          at: ~/project
       #- restore_cache:
        #   keys: backend-migration 
       - run:
