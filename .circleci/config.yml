@@ -359,14 +359,14 @@ jobs:
             npm i
             npm run build
             cd ..
-            tar -czvf artifact-backend.tar.gz .
-           # tar -C backend -czvf artifact.tar.gz .
-            cp artifact-backend.tar.gz .circleci/files
+            tar -czvf artifact.tar.gz .
+            cp artifact.tar.gz .circleci/files
             cd .circleci/files
             ls .
             echo "Contents of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
+          # tar -C backend -czvf artifact.tar.gz .
       - run:
           name: delete bucket objects
           when: on_fail
