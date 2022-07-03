@@ -31,14 +31,14 @@
     production: yes
     state: present
 
-- name: Creates directory
-  file:
-    path: ~/web
-    state: directory
+#- name: Creates directory
+  #file:
+   # path: ~/web
+    #state: directory
 
 - name: Copy backend folder
   copy: 
-    src: "~/project/.circleci/ansible/roles/deploy/tasks/artifact.tar.gz" 
+    src: files/artifact.tar.gz 
     dest: "~/"  #web"
     remote_src: yes
 - name: Executing node
