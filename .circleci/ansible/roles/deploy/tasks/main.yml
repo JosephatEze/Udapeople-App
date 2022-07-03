@@ -37,10 +37,9 @@
     state: directory
 
 - name: Copy backend folder
-  template: 
-    src: "~/project/.circleci/ansible/roles/deploy/files/" 
+  copy: 
+    src: ".circleci/ansible/roles/deploy/files/artifact.tar.gz" 
     dest: "~/web"
-    remote_src: yes
 - name: Executing node
   shell: |
     cd ~/
