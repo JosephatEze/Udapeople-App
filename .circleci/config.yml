@@ -325,9 +325,11 @@ jobs:
           name: delete bucket objects
           when: on_fail
           command: |
-            aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete "$(aws s3api list-object-versions --bucket "${bucket_name}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
+            aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
            # aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+      - revert-migrations
       - destroy-environment
+      
       # Here's where you will add some code to rollback on failure   
   deploy-backend:
     docker:
@@ -353,16 +355,20 @@ jobs:
            # pip3 install awscli
            # apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
       - run:
-          name: Deploy backend
+          name: create an artifact.tar.gz of the backend
           command: |
             cd backend
             npm i
             npm run build
             cd ..
-            tar -czvf artifact.tar.gz .
-            cp artifact.tar.gz .circleci/files
-            cd .circleci/files
-            ls .
+            tar -C backend -czvf artifact.tar.gz .
+            mkdir -p ~/project/.circleci/ansible/roles/deploy/files/
+            mv artifact.tar.gz .circleci/ansible/roles/deploy/files/artifact.tar.gz
+            ls ~/ project/.circleci/ansible/roles/deploy/files/
+           # tar -czvf artifact.tar.gz .
+      - run:
+          name: Deploy backend
+          command: |      
             echo "Contents of the inventory.txt file is -------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
@@ -371,7 +377,7 @@ jobs:
           name: delete bucket objects
           when: on_fail
           command: |
-            aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete "$(aws s3api list-object-versions --bucket "${bucket_name}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
+            aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
            # aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
       - destroy-environment
       # Here's where you will add some code to rollback on failure  
