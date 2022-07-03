@@ -302,9 +302,7 @@ jobs:
             apk add --update ansible
             pip install awscli
             apk add --update nodejs npm
-          # apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
           #yum install -y tar gzip
-          #apk add --update nodejs
           #npm tar gzip curl
       - run:
           name: Get backend url
