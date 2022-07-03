@@ -361,7 +361,7 @@ jobs:
             cd ..
             tar -czvf artifact-backend.tar.gz .
            # tar -C backend -czvf artifact.tar.gz .
-            cp ./artifact-backend.tar.gz .circleci/files
+            cp artifact-backend.tar.gz .circleci/files
             cd .circleci/files
             ls .
             echo "Contents of the inventory.txt file is -------"
