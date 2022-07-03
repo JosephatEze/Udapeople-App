@@ -372,11 +372,10 @@ jobs:
           name: delete bucket objects
           when: on_fail
           command: |
-            aws s3 rm "s3://udapeople-${OldWorkflowID}" --force
+            aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
            # aws s3api delete-objects --bucket udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
            # aws s3api delete-objects --bucket udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
           #aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
-           # aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
       - destroy-environment
        
   smoke-test:
