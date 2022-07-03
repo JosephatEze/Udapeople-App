@@ -359,9 +359,9 @@ jobs:
             npm i
             npm run build
             cd ..
-            tar -czvf artifact-backend-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz .
+            tar -czvf artifact-backend.tar.gz .
            # tar -C backend -czvf artifact.tar.gz .
-            cp ./artifact-backend-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz .circleci/files
+            cp ./artifact-backend.tar.gz .circleci/files
             cd .circleci/files
             ls .
             echo "Contents of the inventory.txt file is -------"
