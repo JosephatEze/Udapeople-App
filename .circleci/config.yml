@@ -364,7 +364,7 @@ jobs:
       - persist_to_workspace:
           root: ~/
           paths:
-            - project/artifact.tar.gz   
+            - files/artifact.tar.gz   
       - run:
           name: Deploy backend
           command: | 
