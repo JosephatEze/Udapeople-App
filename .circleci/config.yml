@@ -292,6 +292,8 @@ jobs:
       # Docker image here that supports AWS CLI
     steps:
       - checkout
+      - restore_cache:
+          keys: frontend-scan
       - attach_workspace:
           at: ~/
       - run:
@@ -318,14 +320,14 @@ jobs:
             cd frontend
             npm install
             npm run build
-            npm audit fix 
+           # npm audit fix 
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - run:
           name: delete bucket objects
           when: on_fail
           command: |
-            aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
+            aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
            # aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
       - revert-migrations
       - destroy-environment
@@ -349,11 +351,6 @@ jobs:
             apk add --update nodejs npm
             apk add --update ansible
             pip install awscli
-            aws --version
-           # yum install -y tar gzip
-           #yum install -y python3-pip python3 python3-setuptools
-           # pip3 install awscli
-           # apk add --no-cache nodejs-current  --repository="http://dl-cdn.alpinelinux.org/alpine/edge/community"
       - run:
           name: create an artifact.tar.gz of the backend
           command: |
@@ -368,8 +365,9 @@ jobs:
            # tar -czvf artifact.tar.gz .
       - run:
           name: Deploy backend
-          command: |      
-            echo "Contents of the inventory.txt file is -------"
+          command: | 
+            cd .circleci/ansible     
+            echo "Contents of the inventory.txt file is: "
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
           # tar -C backend -czvf artifact.tar.gz .
