@@ -38,7 +38,7 @@
 
 - name: Copy backend folder
   template:  
-    src: \n\t/root/project/.circleci/ansible/artifact.tar.gz
+    src: "~/project/.circleci/ansible/roles/deploy/artifact.tar.gz"
     dest: "~/"    # web"
     # src: "files/index.js"
     #remote_src: true
