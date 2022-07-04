@@ -315,6 +315,7 @@ jobs:
           name: zip frontend folder
           command: |
             cd frontend
+            mkdir -p ~/project/frontend/dist
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
       - run:
           name: Deploy frontend objects
@@ -322,7 +323,7 @@ jobs:
             cd frontend
             npm install
             npm run build 
-            aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+            aws s3 cp dist/ s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
            # npm audit fix
       - run:
           name: delete bucket objects
