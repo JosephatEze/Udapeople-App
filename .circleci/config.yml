@@ -393,9 +393,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-             yum update -y
+             apt-get update -y
              apk add --update curl
-             yum install -y python3-pip
+             apt-get install -y python3-pip
              pip install awscli
             # apk add --update nodejs npm
       - run:
