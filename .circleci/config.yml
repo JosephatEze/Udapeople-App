@@ -315,7 +315,7 @@ jobs:
       - run:
           name: zip frontend folder
           command: |
-            cd frontend/
+            cd frontend
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
       - run:
           name: Deploy frontend objects
