@@ -382,9 +382,6 @@ jobs:
           when: on_fail
           command: |
             aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
-           # aws s3api delete-objects --bucket udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
-           # aws s3api delete-objects --bucket udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
-          #aws s3api delete-objects --bucket s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --delete="$(aws s3api list-object-versions --bucket="s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --output=json --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"
       - destroy-environment
        
   smoke-test:
@@ -397,6 +394,7 @@ jobs:
           name: Install dependencies
           command: |
              apk add --update curl
+             pip install awscli
       - run:
           name: Get backend url
           command: |
@@ -419,13 +417,14 @@ jobs:
               echo ${URL} 
               if curl -s ${URL} | grep "Welcome"
               then
-                  # Change this to 0 after the job fails
+                  
                 return 1
               else
                 return 1
               fi
       - revert-migrations
       - destroy-environment
+      # Change the first return 1 to 0 after the job fails
       # Here's where you will add some code to rollback on failure  
   cloudfront-update:
     docker:
