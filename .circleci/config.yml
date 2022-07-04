@@ -366,7 +366,6 @@ jobs:
             mv artifact.tar.gz ~/project/.circleci/ansible/files/artifact.tar.gz
             ls ~/project/.circleci/ansible/files
            # tar -czvf artifact.tar.gz .
-            #mv artifact.tar.gz ~/project/.circleci/ansible/roles/deploy/tasks/files/artifact.tar.gz
       - persist_to_workspace:
           root: .circleci/ansible
           paths:
