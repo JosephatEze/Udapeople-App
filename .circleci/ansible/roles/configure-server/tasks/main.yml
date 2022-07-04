@@ -2,12 +2,12 @@
 ---
 - name: "upgrade packages."
   become: true
-  apk:
+  yum:
     upgrade: "yes"
 
 - name: "install dependencies."
   become: true
-  apk:
+  yum:
     name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
