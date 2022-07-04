@@ -303,7 +303,6 @@ jobs:
             pip install awscli
             apk add --update nodejs npm
           #yum install -y tar gzip
-          #npm tar gzip curl
       - run:
           name: Get backend url
           command: |
