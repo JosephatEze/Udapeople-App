@@ -38,9 +38,9 @@
 
 - name: Copy backend folder
   copy: 
-    src: "files/artifact.tar.gz"  #{{playbook_dir}}/
+    src: "{{playbook_dir}}/files/"
     dest: "~/"  #web"
-    remote_src: yes
+    #remote_src: yes
 - name: Executing node
   shell: |
     cd ~/
