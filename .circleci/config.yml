@@ -396,11 +396,8 @@ jobs:
           command: |
              yum update -y
              yum install curl
-             apk add --update nodejs npm
-            # pip install awscli
+            # yum --update nodejs npm
             #yum install -y python3-pip
-            # apk add --update nodejs npm
-            #apt update
             #apk add --update curl
       - run:
           name: Get backend url
