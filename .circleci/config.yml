@@ -396,17 +396,17 @@ jobs:
           command: |
              yum update -y
              yum install curl
-             yum --update nodejs npm
+            # yum install nodejs npm
             #yum install -y python3-pip
             #apk add --update curl
       - run:
           name: Get backend url
           command: |
               export BACKEND_IP=$(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text)
-              export API_URL="https://${BACKEND_IP}:3030"
+              export API_URL="http://${BACKEND_IP}:3030"
               echo "${API_URL}" 
               export PUBLIC_DNS=$(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicDnsName' --filters "Name=tag:project,Values=udapeople" --output=text)
-              export PUBLIC_DNS_URL="https://${PUBLIC_DNS}:3030"
+              export PUBLIC_DNS_URL="http://${PUBLIC_DNS}:3030"
                echo "${PUBLIC_DNS_URL}"        
       - run:
           name: Backend smoke test.
