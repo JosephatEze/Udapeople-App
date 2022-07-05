@@ -11,8 +11,8 @@
 
 - name: extract backend folder into ec2 instance
   unarchive:
-  src: "{{playbook_dir}}/files/artifact.tar.gz"
-  dest: ~/web
+    src: "{{playbook_dir}}/files/artifact.tar.gz"
+    dest: ~/web
 
 - name: install npm
   become: true
@@ -23,7 +23,8 @@
   become: true
   shell: |
     cd web
-    pm2 start npm 
+    pm2 start app.js
+   # pm2 start npm 
     
    
 
