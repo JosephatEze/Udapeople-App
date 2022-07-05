@@ -154,7 +154,7 @@ jobs:
           mentions: '@DevelopmentTeam'
           template: basic_success_1
           # npm install oauth-sign@^0.9.0   
-          # Your code should be here    
+            
       - save_cache:
           paths: frontend/node_modules
           key: frontend-scan
