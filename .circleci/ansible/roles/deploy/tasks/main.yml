@@ -43,7 +43,7 @@
     remote_src: no
 - name: unzip backend folder
   shell: |
-    cd ~/" 
+    cd ~/ 
     tar -xzvf artifact.tar.gz .
     ls .
 - name: Executing node
