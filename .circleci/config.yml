@@ -386,18 +386,21 @@ jobs:
        
   smoke-test:
     docker:
-       - image: alpine:latest
+       - image: amazon/aws-cli
+       #- image: alpine:latest
       # Lightweight Docker image 
     steps:
       - checkout
       - run:
           name: Install dependencies
           command: |
-             apt-get update -y
-             apk add --update curl
-             apt-get install -y python3-pip
-             pip install awscli
+             yum update -y
+             yum install curl
+            # pip install awscli
+            #yum install -y python3-pip
             # apk add --update nodejs npm
+            #apt update
+            #apk add --update curl
       - run:
           name: Get backend url
           command: |
