@@ -1,35 +1,9 @@
-## Deployment playbook goes here.
+
 ---
-- name: "update apt packages."
-  become: yes
-  yum:
-    update_cache: yes
-
-- name: "upgrade packages"
-  become: yes
-  yum:
-    upgrade: yes
-
-
 - name: remove dependencies that are no longer required
   become: yes
   yum:
     autoremove: yes
-
-- name: "install dependencies."
-  become: yes
-  yum:
-    name: ["nodejs", "npm"]
-    state: latest
-    update_cache: yes
-
-- name: "install pm2"
-  become: yes
-  npm:
-    name: pm2
-    global: yes
-    production: yes
-    state: present
 
 - name: Creates directory
   file:
@@ -54,10 +28,38 @@
 - name: Executing node
   become: true
   shell: |
-    cd web/
+    cd web
     pm2 start npm --start
     
    
+
+
+## Deployment playbook goes here.
+#---
+
+
+#- name: "upgrade packages"
+  #become: yes
+  #yum:
+  #  upgrade: yes
+
+#- name: "install dependencies."
+ # become: yes
+  #yum:
+   # name: ["nodejs", "npm"]
+    #state: latest
+    #update_cache: yes
+
+#- name: "install pm2"
+ # become: yes
+ # npm:
+   # name: pm2
+   # global: yes
+    #production: yes
+    #state: present
+
+
+
 
 
   #pm2 start npm --start
