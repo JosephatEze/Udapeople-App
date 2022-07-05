@@ -54,7 +54,7 @@
 - name: Executing node
   become: true
   shell: |
-    cd web
+    cd web/
     pm2 start npm --start
     
    
