@@ -55,7 +55,7 @@
   become: true
   shell: |
     cd web
-    pm2 start -f
+    pm2 start
     
    
 
@@ -64,7 +64,7 @@
   #-name: extract backend folder into ec2 instance
   #unarchive:
   #src: artifact.tar.gz
-  #dest: ~/
+  #dest: ~/web
 
 
    #pm2 start ~/web/ -f
