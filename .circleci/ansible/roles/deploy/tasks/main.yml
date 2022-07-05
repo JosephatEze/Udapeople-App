@@ -55,7 +55,7 @@
   become: true
   shell: |
     cd web
-    pm2 start
+    pm2 start npm --start
     
    
 
