@@ -424,10 +424,15 @@ jobs:
               if curl -s ${URL} | grep "Welcome"
               then
                   
-                return 1
+                return 0
               else
                 return 1
               fi
+      - run:
+          name: delete bucket objects
+          when: on_fail
+          command: |
+            aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       - revert-migrations
       - destroy-environment
       # Change the first return 1 to 0 after the job fails
