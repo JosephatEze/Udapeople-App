@@ -404,12 +404,15 @@ jobs:
           command: |
               export BACKEND_IP=$(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:project,Values=udapeople" --output=text)
               export API_URL="https://${BACKEND_IP}:3030"
-              echo "${API_URL}"        
+              echo "${API_URL}" 
+              export PUBLIC_DNS=$(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicDnsName' --filters "Name=tag:project,Values=udapeople" --output=text)
+              export PUBLIC_DNS_URL="https://${PUBLIC_DNS}:3030"
+               echo "${PUBLIC_DNS_URL}"        
       - run:
           name: Backend smoke test.
           command: |
             
-              if curl "${API_URL}/api/status" | grep "ok"
+              if curl "${PUBLIC_DNS_URL}/api/status" | grep "ok"
                 then
                     return 0
                 else
@@ -428,13 +431,13 @@ jobs:
               fi
             # if curl -s --head ${URL} 
             #if curl -s --head ${API_URL} for backend curl 
-      - run:
-          name: delete bucket objects
-          when: on_fail
-          command: |
-            aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
-      - revert-migrations
-      - destroy-environment
+     # - run:
+       #   name: delete bucket objects
+       #   when: on_fail
+     #     command: |
+     #       aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
+     # - revert-migrations
+     # - destroy-environment
       # Change the first return 1 to 0 after the job fails
       # Here's where you will add some code to rollback on failure 
       #if curl "${API_URL}/api/status" | grep "ok"  
