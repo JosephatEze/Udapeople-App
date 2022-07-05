@@ -396,6 +396,7 @@ jobs:
           command: |
              yum update -y
              yum install curl
+             apk add --update nodejs npm
             # pip install awscli
             #yum install -y python3-pip
             # apk add --update nodejs npm
@@ -410,7 +411,8 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            if curl -s --head ${API_URL} 
+            
+              if curl "${API_URL}/api/status" | grep "ok"
               then
                   return 0
               else
@@ -421,14 +423,14 @@ jobs:
           command: |
               URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees"            
               echo ${URL} 
-          
-              if curl -s --head ${URL} 
+              if curl -s ${URL} | grep "Welcome"
               then  
                 return 0
               else
                 return 1
               fi
-            # if curl -s ${URL} | grep "Welcome"  
+            # if curl -s --head ${URL} 
+            #if curl -s --head ${API_URL} for backend curl 
       - run:
           name: delete bucket objects
           when: on_fail
