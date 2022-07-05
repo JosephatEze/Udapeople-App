@@ -46,11 +46,26 @@
     cd ~/ 
     tar -xzvf artifact.tar.gz .
     ls .
-- name: Executing node
+- name: install npm
+  become: true
   shell: |
     cd ~/
-    pm2 start ~/ -f
+    npm install
+- name: Executing node
+  become: true
+  shell: |
+    cd ~/
+    pm2 start npm --start
    
+
+
+  #pm2 start ~/ -f
+  #-name: extract backend folder into ec2 instance
+  #unarchive:
+  #src: artifact.tar.gz
+  #dest: ~/
+
+
    #pm2 start ~/web/ -f
    # pm2 stop default
    # pm2 start 
