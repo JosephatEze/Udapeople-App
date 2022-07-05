@@ -10,16 +10,11 @@
     path: ~/web
     state: directory
 
-- name: Copy backend folder
-  copy: 
-    src: "{{playbook_dir}}/files/"
-    dest: "~/web"
-    remote_src: no
-- name: unzip backend folder
-  shell: |
-    cd web 
-    tar -xzvf artifact.tar.gz .
-    ls .
+-name: extract backend folder into ec2 instance
+ unarchive:
+  src: "{{playbook_dir}}/files/artifact.tar.gz"
+  dest: ~/web
+
 - name: install npm
   become: true
   shell: |
@@ -58,6 +53,19 @@
     #production: yes
     #state: present
 
+
+
+#******
+#- name: Copy backend folder
+ # copy: 
+ #   src: "{{playbook_dir}}/files/"
+   # dest: "~/web"
+  #  remote_src: no
+#- name: unzip backend folder
+ # shell: |
+  #  cd web 
+  #  tar -xzvf artifact.tar.gz .
+   # ls .
 
 
 
