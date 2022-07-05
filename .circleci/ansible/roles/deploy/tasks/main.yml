@@ -55,11 +55,12 @@
   become: true
   shell: |
     cd ~/
-    pm2 start npm --start
+    pm2 start ~/ -f
+    
    
 
 
-  #pm2 start ~/ -f
+  #pm2 start npm --start
   #-name: extract backend folder into ec2 instance
   #unarchive:
   #src: artifact.tar.gz
