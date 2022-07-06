@@ -1,18 +1,18 @@
 ## Back-end server configuration playbook goes here.
 ---
-- name: "update yum packages."
-  become: yes
-  apt-get:
+- name: "update apt packages."
+  become: true
+  apt:
     update_cache: yes
     
 - name: "upgrade packages."
   become: true
-  apt-get:
+  apt:
     upgrade: "yes"
 
 - name: "install dependencies."
   become: true
-  apt-get:
+  apt:
     name: ["nodejs", "npm"]
     state: latest
     update_cache: yes

@@ -1,7 +1,7 @@
 ---
 - name: remove dependencies that are no longer required
-  become: yes
-  apt-get:
+  become: true
+  apt:
     autoremove: yes
 
 - name: Creates directory
