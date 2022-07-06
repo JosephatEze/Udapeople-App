@@ -23,6 +23,7 @@
   become: true
   shell: |
     cd web
+    pm2 start
     pm2 serve . 3030
      
    # pm2 start npm --start
