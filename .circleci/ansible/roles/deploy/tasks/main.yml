@@ -23,8 +23,10 @@
   become: true
   shell: |
     cd backend
-    pm2 start
+    pm2 init
+    pm2 start -f
     pm2 serve . 3030
+    pm2 save
      
    # pm2 start npm --start
    # pm2 start npm 
