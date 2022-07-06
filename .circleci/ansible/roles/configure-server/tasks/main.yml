@@ -2,17 +2,17 @@
 ---
 - name: "update yum packages."
   become: yes
-  yum:
+  apt:
     update_cache: yes
     
 - name: "upgrade packages."
   become: true
-  yum:
+  apt:
     upgrade: "yes"
 
 - name: "install dependencies."
   become: true
-  yum:
+  apt:
     name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
