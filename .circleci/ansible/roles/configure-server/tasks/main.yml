@@ -17,6 +17,10 @@
     state: latest
     update_cache: yes
 
+- name: "install node 13.8.0"
+  become: true
+  shell: n 13.8.0
+
 - name: "install pm2"
   become: true
   npm:
