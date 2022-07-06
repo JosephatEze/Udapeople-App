@@ -14,11 +14,12 @@
     src: "{{playbook_dir}}/files/artifact.tar.gz"
     dest: ~/backend
 
-- name: install npm
+- name: install node dependency
   become: true
   shell: |
     cd backend
     npm install
+   #npm i -g backend-app
 - name: "Executing node"
   become: true
   shell: |
@@ -28,10 +29,9 @@
     sudo npm install ts-node -g
     forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
   register: "execut_node"
-  
-- Name: print message
+- Name: "print message"
   debug:
-  msg: "{{execute_node.stdout_lines}}"
+    msg: "{{execute_node.stdout_lines}}"
 
 - name: "configure pm2 to run as a service"
   become: true
