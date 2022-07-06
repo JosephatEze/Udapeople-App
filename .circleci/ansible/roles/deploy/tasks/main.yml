@@ -6,23 +6,23 @@
 
 - name: Creates directory
   file:
-    path: ~/web
+    path: ~/backend
     state: directory
 
 - name: extract backend folder into ec2 instance
   unarchive:
     src: "{{playbook_dir}}/files/artifact.tar.gz"
-    dest: ~/web
+    dest: ~/backend
 
 - name: install npm
   become: true
   shell: |
-    cd web
+    cd backend
     npm install
 - name: Executing node
   become: true
   shell: |
-    cd web
+    cd backend
     pm2 start
     pm2 serve . 3030
      
