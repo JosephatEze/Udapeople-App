@@ -19,7 +19,7 @@
   shell: |
     cd backend
     npm install
-   #npm i -g backend-app
+   #npm i -g backend-App
 - name: "Executing node"
   become: true
   shell: |
