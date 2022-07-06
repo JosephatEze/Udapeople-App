@@ -28,7 +28,7 @@
     sudo npm install forever -g
     sudo npm install ts-node -g
     forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
-  register: "execut_node"
+  register: execut_node
 - Name: "print message"
   debug:
     msg: "{{execute_node.stdout_lines}}"
