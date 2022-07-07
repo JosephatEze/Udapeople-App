@@ -241,6 +241,7 @@ jobs:
              apk add --update ansible
              apk add --update python3 py3-pip
              pip install awscli
+             apt update
            # aws --version
            # apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install awscli && rm -rf /var/cache/apk/*
            #- run: apt-get install -y python3-pip python3 python3-setuptools
@@ -256,7 +257,7 @@ jobs:
              cd .circleci/ansible
              ansible-playbook -i inventory.txt configure-server.yml
       #- destroy-environment
-      # Here's where you will add some code to rollback on failure 
+      # Here's where you will add some code to rollback ON EVENT OF failure 
   run-migrations:
     docker:
       - image: circleci/node:13.8.0
