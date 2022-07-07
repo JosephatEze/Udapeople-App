@@ -1,7 +1,7 @@
 ---
 - name: remove dependencies that are no longer required
   become: true
-  apt:
+  yum:
     autoremove: yes
 
 - name: Creates directory

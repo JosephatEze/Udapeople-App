@@ -2,21 +2,22 @@
 ---
 - name: "update apt packages."
   become: true
-  apt:
+  yum:
     update: yes
     #update_cache: yes
     
 - name: "upgrade packages."
   become: true
-  apt:
+  yum:
     upgrade: "yes"
 
 - name: "install dependencies."
   become: true
-  apt:
+  yum:
     name: ["nodejs", "npm"]
     state: latest
-    update_cache: yes
+    update: yes
+    #update_cache: yes
 
 - name: "install node 13.8.0"
   become: true
