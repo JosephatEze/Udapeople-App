@@ -239,9 +239,9 @@ jobs:
           name: Install dependencies
           command: |   
              apk add --update ansible
-             pip install --upgrade pip
              pip install awscli
-             yum update
+             dnf update
+            # pip install --upgrade pip
             # apk add --update python3 py3-pip
            # aws --version
            # apk add --no-cache python3 py3-pip && pip3 install --upgrade pip && pip3 install awscli && rm -rf /var/cache/apk/*
