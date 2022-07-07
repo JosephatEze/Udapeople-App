@@ -3,8 +3,7 @@
 - name: "update apt packages."
   become: true
   yum:
-    update: yes
-    #update_cache: yes
+    update_cache: yes
     
 - name: "upgrade packages."
   become: true
@@ -16,8 +15,7 @@
   yum:
     name: ["nodejs", "npm"]
     state: latest
-    update: yes
-    #update_cache: yes
+    update_cache: yes
 
 - name: "install node 13.8.0"
   become: true
