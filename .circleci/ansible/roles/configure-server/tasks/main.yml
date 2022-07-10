@@ -29,8 +29,8 @@
     production: yes
     state: present
 
-- name: "move env file to ec2 server"
-  copy:
-    src: env.sh
-    dest: /etc/profile.d/
+#- name: "move env file to ec2 server"
+  #copy:
+   # src: env.sh
+   # dest: /etc/profile.d/
 
