@@ -1,7 +1,7 @@
 ---
 - name: remove dependencies that are no longer required
   become: true
-  yum:
+  apt:
     autoremove: yes
 
 - name: Creates directory
@@ -23,13 +23,13 @@
     npm i -g backend
   
 - name: Executing node
-   become: true
-   shell: |
-     cd backend
-     npm start
-     pm2 start -f
-     pm2 serve . 3030
-     pm2 save
+  become: true
+  shell: |
+    cd backend
+    npm start
+    pm2 start -f
+    pm2 serve . 3030
+    pm2 save
 
 
 
