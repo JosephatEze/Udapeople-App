@@ -44,7 +44,7 @@ async function bootstrap() {
         callback(new Error('Not allowed by CORS'));
       }
     },
-  };
+  };s
   app.use(cors(corsOptions));
   app.useGlobalFilters(new ErrorFilter());
   await app.listen(config.PORT);
