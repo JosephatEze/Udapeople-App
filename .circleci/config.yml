@@ -177,6 +177,7 @@ jobs:
               npm update mkdirp --depth 6
               npm update path-parse --depth 3
               npm update kind-of --depth 14
+              npm fund
                    
       - slack/notify:
           event: fail
