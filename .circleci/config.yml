@@ -170,8 +170,7 @@ jobs:
           name: analyze back-end
           command: |
               cd backend
-             # npm install 
-              npm install npm@latest -g
+              npm install 
               npm audit fix --audit-level=critical --force
               npm audit --audit-level=critical 
               
