@@ -341,7 +341,7 @@ jobs:
       - revert-migrations
       - destroy-environment
       
-      # Here's where you will add some code to rollback on failure   
+      # Here's where you will add some code to rollback on failures   
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11
@@ -394,7 +394,7 @@ jobs:
     docker:
        - image: amazon/aws-cli
        #- image: alpine:latest
-      # Lightweight Docker image 
+       # Lightweight Docker images 
     steps:
       - checkout
       - run:
