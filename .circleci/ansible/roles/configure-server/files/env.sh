@@ -10,5 +10,5 @@ export TYPEORM_PORT=5432
 export TYPEORM_USERNAME=postgres
 export TYPEORM_PASSWORD=TYPEORM_PASSWORD
 export TYPEORM_DATABASE=postgres
-export check="{{lookup('env', TYPEORM_HOST)}}"
+#export check="{{lookup('env', TYPEORM_HOST)}}"
 
