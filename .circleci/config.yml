@@ -171,8 +171,9 @@ jobs:
           command: |
               cd backend
               npm install 
+              npm upgrade
               npm audit --audit-level=critical
-             # npm audit fix --audit-level=critical --force
+              npm audit fix --audit-level=critical --force
               
              # npm install --save-dev webpack@5.73.0
              # npm update mkdirp --depth 6
