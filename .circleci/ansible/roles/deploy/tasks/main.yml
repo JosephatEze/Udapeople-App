@@ -14,20 +14,23 @@
     src: "{{playbook_dir}}/files/artifact.tar.gz"
     dest: ~/backend
 
-- name: install node dependency
-  become: true
-  shell: |
-    cd backend
-    npm install
+#- name: install node dependency
+ # become: true
+  #shell: |
+   # cd backend
+    
    # pm2 init
-  #npm i -g backend
+   #npm i -g backend
   
 - name: Executing node
   become: true
   shell: |
     cd backend
+    npm install
+    npm run build
     pm2 stop default
-    pm2 start npm -- start
+    pm2 start dist/main.js --name='api'
+   # pm2 start npm -- start
    # npm start
    # pm2 start -f
    # pm2 serve . 3030
