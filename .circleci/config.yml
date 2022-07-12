@@ -445,7 +445,7 @@ jobs:
      # - revert-migrations
      # - destroy-environment
       # Change the first return 1 to 0 after the job fails
-      # Here's where you will add some code to rollback on failure 
+      # Here's where you will add some code to rollback on failuress
       #if curl "${API_URL}/api/status" | grep "ok"  
   cloudfront-update:
     docker:
