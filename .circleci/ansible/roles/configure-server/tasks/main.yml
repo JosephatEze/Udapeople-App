@@ -34,9 +34,9 @@
     src: "{{playbook_dir}}/myenv/env.sh"
     dest: /etc/profile.d/
 
-- name: run environment script
-  become: true
-  shell: |
-    cd /etc/profile.d/
-    bash env.sh
+#- name: run environment script
+ # become: true
+  #shell: |
+   # cd /etc/profile.d/
+   # ./env.sh
 
