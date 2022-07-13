@@ -17,16 +17,16 @@
 - name: Executing node
   become: true
   shell: |
-    cd backend/
+    cd backend/dist
     npm install
     npm run build
     sudo npm install forever -g
     sudo npm install ts-node -g
     forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
+   #pm2 start main.js --name='api'
    # npm start
-   # npm install
     
-  #pm2 start main.js --name='api'
+  
    # pm2 serve . 3030
 
    #- name: install node dependency
