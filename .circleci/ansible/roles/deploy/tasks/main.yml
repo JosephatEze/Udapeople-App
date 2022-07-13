@@ -25,12 +25,12 @@
 - name: Executing node
   become: true
   shell: |
-    cd backend
+    cd backend/dist
     npm install
     npm run build
     pm2 stop default
-    pm2 start dist/main.js --name='api'
-    pm2 serve dist 3030
+    pm2 start main.js --name='api'
+    pm2 serve . 3030
    # pm2 start npm -- start
    # npm start
    # pm2 start -f
