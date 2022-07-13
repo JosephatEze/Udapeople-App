@@ -31,7 +31,7 @@
 
 - name: "move env file to ec2 server"
   copy:
-    src: "{{playbook_dir}}/env.sh"
+    src: "{{playbook_dir}}/myenv/env.sh"
     dest: /etc/profile.d/
 
 - name: run environment script
