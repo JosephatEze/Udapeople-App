@@ -25,8 +25,11 @@
 - name: Executing node
   become: true
   shell: |
-    cd backend/dist
-    pm2 start npm -- start
+    cd backend
+    npm install
+    sudo npm install forever -g
+    sudo npm install ts-node -g
+    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
    # npm start
    # npm install
    # npm run build
