@@ -1,4 +1,3 @@
-## Back-end server configuration playbook goes here.
 ---
 - name: "update apt packages."
   become: true
@@ -16,10 +15,6 @@
     name: ["nodejs", "npm"]
     state: latest
     update_cache: yes
-
-#- name: "install node 13.8.0"
-  #become: true
-  #shell: n 13.8.0
 
 - name: "install pm2"
   become: true
@@ -40,3 +35,8 @@
    # cd /etc/profile.d/
    # ./env.sh
 
+#- name: "install node 13.8.0"
+  #become: true
+  #shell: n 13.8.0
+
+## Back-end server configuration playbook goes here.

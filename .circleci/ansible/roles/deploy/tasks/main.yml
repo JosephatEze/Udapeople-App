@@ -13,14 +13,6 @@
   unarchive:
     src: "{{playbook_dir}}/files/artifact.tar.gz"
     dest: ~/backend
-
-#- name: install node dependency
- # become: true
-  #shell: |
-   # cd backend
-    
-   # pm2 init
-   #npm i -g backend
   
 - name: Executing node
   become: true
@@ -37,16 +29,22 @@
   #pm2 start main.js --name='api'
    # pm2 serve . 3030
 
+   #- name: install node dependency
+ # become: true
+  #shell: |
+   # cd backend
+    
+   # pm2 init
+   #npm i -g backend
 
 
-   # 
+
    # npm start
    # pm2 start -f
    # pm2 serve . 3030
    # pm2 save
 
-
-
+#****
 ##- name: "Executing node"
  # become: true
  # shell: |
@@ -62,43 +60,27 @@
  # become: true
   #shell: |
    # env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
-
-
-
-
-   
-
-
-
-
-
-
- 
      
    # pm2 start npm --start
    # pm2 start npm 
    # pm2 stop default
 
-
- 
-
-
 ## Deployment playbook goes here.
 #---
 
-
+#****
 #- name: "upgrade packages"
   #become: yes
   #yum:
   #  upgrade: yes
-
+#****
 #- name: "install dependencies."
  # become: yes
   #yum:
    # name: ["nodejs", "npm"]
     #state: latest
     #update_cache: yes
-
+#****
 #- name: "install pm2"
  # become: yes
  # npm:
@@ -106,8 +88,6 @@
    # global: yes
     #production: yes
     #state: present
-
-
 
 #****
 #- name: Copy backend folder
