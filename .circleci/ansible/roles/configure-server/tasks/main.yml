@@ -34,3 +34,9 @@
     src: env.sh
     dest: /etc/profile.d/
 
+- name: run environment script
+  become: true
+  shell: |
+    cd /etc/profile.d/
+    ./env.sh
+
