@@ -38,5 +38,5 @@
   become: true
   shell: |
     cd /etc/profile.d/
-    . env.sh
+    bash env.sh
 
