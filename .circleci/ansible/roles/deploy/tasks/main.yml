@@ -25,9 +25,9 @@
 - name: Executing node
   become: true
   shell: |
-    cd backend/dist
-    npm install
+    cd backend
     npm run start:prod
+   # npm install
    # npm run build
   #pm2 start main.js --name='api'
    # pm2 serve . 3030
