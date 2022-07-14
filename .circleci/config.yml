@@ -369,9 +369,9 @@ jobs:
            # apk add --update nodejs npm
            # apk add --update ansible
            # pip install awscli
-      - install_nodejs
-      - install_awscli
-      - install_ansible
+        - install_nodejs
+        - install_awscli
+        - install_ansible
       - run:
           name: create an artifact.tar.gz of the backend
           command: |
@@ -419,8 +419,8 @@ jobs:
                       # yum install nodejs npm
                       #yum install -y python3-pip
                       #apk add --update curl
-      - install_nodejs
-      - install_awscli      
+        - install_nodejs
+        - install_awscli      
       - run:
           name: Get backend url
           command: |
