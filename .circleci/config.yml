@@ -24,9 +24,9 @@ commands:
             SUCCESS=$(curl --insecure  https://kvdb.io/K9eP7c18yzzvrVqhXAynsC/migration_${CIRCLE_WORKFLOW_ID:0:7})
             if(( $SUCCESS==1 )); 
             then
-                cd ~/project/backend
-                npm install
-                npm run migration:revert
+              cd ~/project/backend
+              npm install
+              npm run migration:revert
             fi
            # SUCCESS = 1
 jobs:
@@ -211,10 +211,12 @@ jobs:
           name: Add back-end ip to ansible inventory
          # parameters:
              # Backendip:
-          command: | 
-             echo "[web]" > .circleci/ansible/inventory.txt
+          command: |
+             cat .circleci/ansible/inventory.txt
+             
              aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text >> .circleci/ansible/inventory.txt 
              cat .circleci/ansible/inventory.txt
+           # echo "[web]" > .circleci/ansible/inventory.txt
            # cd .circleci/ansible
            #  rm inventory.txt
            # touch inventory.txt
