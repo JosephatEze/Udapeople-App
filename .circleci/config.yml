@@ -349,7 +349,7 @@ jobs:
       - revert-migrations
       - destroy-environment
       
-      # Here's where you will add some code to rollback on failuressss 
+      # Here's where you will add some code to rollback on failure 
   deploy-backend:
     docker:
       - image: python:3.7-alpine3.11
