@@ -6,14 +6,14 @@
 
 - name: "Unarchive backend files"
   unarchive:
-    src: artifact.tar.gz
+    src: "{{playbook_dir}}/files/artifact.tar.gz"
     dest: ~/backend-app
 
 - name: "Installing Node Dependencies"
   shell: |
     cd ~/backend-app
     npm i
-- name: "Executing Node app with PM2"
+- name: "Executing Node app"
   shell: |
     cd ~/backend-app/dist
     cd ../
