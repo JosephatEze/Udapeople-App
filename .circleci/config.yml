@@ -352,7 +352,8 @@ jobs:
       # Here's where you will add some code to rollback on failures   
   deploy-backend:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: cimg/base:stable
+      #- image: python:3.7-alpine3.11
       # Docker image here that supports Ansible
     steps:
       - checkout
@@ -362,12 +363,15 @@ jobs:
           at: ~/
       # Add ssh keys with fingerprint for login to ec2 server
       # attach workspace
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update nodejs npm
-            apk add --update ansible
-            pip install awscli
+      #- run:
+        #  name: Install dependencies
+         # command: |
+           # apk add --update nodejs npm
+           # apk add --update ansible
+           # pip install awscli
+      - install_nodejs
+      - install_awscli
+      - install_ansible
       - run:
           name: create an artifact.tar.gz of the backend
           command: |
@@ -400,20 +404,23 @@ jobs:
        
   smoke-test:
     docker:
-       - image: amazon/aws-cli
+      - image: cimg/base:stable 
+       #- image: amazon/aws-cli
        #- image: alpine:latest
        # Lightweight Docker images 
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-             yum update -y
-             yum install curl
-             yum install -y tar gzip
-            # yum install nodejs npm
-            #yum install -y python3-pip
-            #apk add --update curl
+      # - run:
+         #  name: Install dependencies
+         #  command: |
+            #  yum update -y
+            #  yum install curl
+             # yum install -y tar gzip
+                      # yum install nodejs npm
+                      #yum install -y python3-pip
+                      #apk add --update curl
+      - install_nodejs
+      - install_awscli      
       - run:
           name: Get backend url
           command: |
