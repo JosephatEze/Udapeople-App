@@ -410,15 +410,15 @@ jobs:
        # Lightweight Docker images 
     steps:
       - checkout
-       - run:
-           name: Install dependencies
-           command: |
-              yum update -y
-              yum install curl
-              yum install -y tar gzip
-            # yum install nodejs npm
-            #yum install -y python3-pip
-            #apk add --update curl
+      - run:
+          name: Install dependencies
+          command: |
+            yum update -y
+            yum install curl
+            yum install -y tar gzip
+          # yum install nodejs npm
+          #yum install -y python3-pip
+          #apk add --update curl
         #- install_nodejs
         #- install_awscli      
       - run:
