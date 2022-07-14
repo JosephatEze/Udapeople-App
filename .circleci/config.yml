@@ -366,12 +366,11 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update nodejs npm
-            apk add --update ansible
-            pip install awscli
-        #- install_nodejs
-        #- install_awscli
-        #- install_ansible
+            sudo apt-get --update nodejs npm
+            sudo apt-get --update ansible
+            sudo apt-get install awscli
+         #    pip install awscli
+        #apk add --update nodejs npm
       - run:
           name: create an artifact.tar.gz of the backend
           command: |
@@ -413,9 +412,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            yum update -y
-            yum install curl
-            yum install -y tar gzip
+            sudo apt-get update -y
+            sudo apt-get install curl
+            sudo apt-get install -y tar gzip
           # yum install nodejs npm
           #yum install -y python3-pip
           #apk add --update curl
