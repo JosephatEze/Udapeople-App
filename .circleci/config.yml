@@ -366,9 +366,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get --update nodejs npm
-            sudo apt-get --update ansible
-            sudo apt-get install awscli
+             apt-get install nodejs npm
+             apt-get install ansible
+             apt-get install awscli
          #    pip install awscli
         #apk add --update nodejs npm
       - run:
@@ -412,9 +412,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            sudo apt-get update -y
-            sudo apt-get install curl
-            sudo apt-get install -y tar gzip
+             apt-get update -y
+             apt-get install curl
+             apt-get install -y tar gzip
           # yum install nodejs npm
           #yum install -y python3-pip
           #apk add --update curl
