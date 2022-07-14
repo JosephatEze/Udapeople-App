@@ -15,7 +15,7 @@
     npm i
 - name: "Executing Node app"
   shell: |
-    cd ~
+    cd ~/
     npm install
     sudo npm install forever -g
     sudo npm install ts-node -g
