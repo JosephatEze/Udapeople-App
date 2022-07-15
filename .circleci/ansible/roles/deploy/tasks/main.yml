@@ -17,8 +17,8 @@
     sudo npm install ts-node -g
 - name: "start Node app"
   shell: |
-    cd ~/backend
-    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./dist/main.js
+    cd ~/backend/dist
+    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js
     
     
     
