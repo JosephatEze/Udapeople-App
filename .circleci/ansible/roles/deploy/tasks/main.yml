@@ -17,7 +17,9 @@
 - name: "start Node app"
   become: true
   become_user: root
-  command: forever start /home/ubuntu/backend/dist/main.js
+  command: 
+    cd /home/ubuntu/backend/
+    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" dist/main.js    #forever start /home/ubuntu/backend/dist/main.js
   when: 
     "forever_list.stdout.find('/home/ubuntu/backend/dist/main.js')==-1"
 
@@ -25,7 +27,7 @@
   shell: |
     cd /home/ubuntu/backend/
     pwd
-    ls -la
+    ls 
   register: playbook_path_output
 - debug: 
     var: playbook_path_output.stdout
