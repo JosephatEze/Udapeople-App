@@ -34,7 +34,7 @@ Resources:
   EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      InstanceType: t2.micro
+      InstanceType: t3.large #t2.micro
       SecurityGroups:
         - Ref: InstanceSecurityGroup
       KeyName: udapeople-key # If you use another key pair name, you should change this value to match.
