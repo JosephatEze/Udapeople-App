@@ -10,13 +10,32 @@
     dest: ~/backend
 
 - name: "Installing Node Dependencies"
-  shell: |
+  command: |
     cd ~/backend
     npm install
     sudo npm install forever -g
     sudo npm install ts-node -g
+
+- name: "check list of node.js apps running"
+  command: forever list
+  register: forever_list
+  changed_when: false
+
 - name: "start Node app"
-  shell: |
+  become: true
+  become_user: root
+  command: forever start /backend/dist/main.js
+  when: 
+    "forever_list.stdout.find('/backend/dist/main.js')==-1"
+
+
+
+
+
+- name: "start Node app"
+  become: true
+
+  command: |
     cd ~/backend/dist
     forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js
     
