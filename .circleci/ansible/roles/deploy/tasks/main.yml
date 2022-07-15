@@ -9,13 +9,6 @@
     src: "{{playbook_dir}}/files/artifact.tar.gz"
     dest: ~/backend
 
-- name: "Installing Node Dependencies"
-  command: |
-    cd ~/ubuntu/backend
-    npm install
-    sudo npm install forever -g
-    sudo npm install ts-node -g
-
 - name: "check list of node.js apps running"
   command: forever list
   register: forever_list
@@ -32,12 +25,19 @@
 
 
 
-- name: "start Node app"
-  become: true
 
-  command: |
-    cd ~/backend/dist
-    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js
+ #- name: "Installing Node Dependencies"
+  # shell: |
+    # cd ~/ubuntu/backend
+     #npm install
+     #sudo npm install forever -g
+    # sudo npm install ts-node -g
+ #- name: "start Node app"
+   #become: true
+   #become_user: root
+   #command: |
+    # cd ~/backend/dist
+    # forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js
     
     
     
