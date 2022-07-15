@@ -16,13 +16,13 @@
     npm install
     sudo npm install forever -g
     sudo npm install ts-node -g
-- name: "Executing Node app"
+- name: "start Node app"
   shell: |
     cd ~/backend
     forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
-    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" .
-    cd ~/backend/dist
-    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" .
+    
+    
+    
    #register: execute_node
 
  #- name: print message

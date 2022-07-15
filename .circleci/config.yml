@@ -451,15 +451,15 @@ jobs:
             #  URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com/#/employees" 
             # if curl -s --head ${URL} 
             #if curl -s --head ${API_URL} for backend curl 
-      - run:
-          name: delete bucket objects
-          when: on_fail
-          command: |
-            aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
+      #- run:
+       #   name: delete bucket objects
+       #   when: on_fail
+        #  command: |
+        #    aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       #- revert-migrations
      # - destroy-environment
       # Change the first return 1 to 0 after the job fails
-      # Here's where you will add some code to rollback on failure
+      # Here's where you will add some code to rollback on failuresss
       #if curl "${API_URL}/api/status" | grep "ok"  
   cloudfront-update:
     docker:
