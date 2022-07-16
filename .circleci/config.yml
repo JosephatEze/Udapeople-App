@@ -29,6 +29,33 @@ commands:
               npm run migration:revert
             fi
            # SUCCESS = 1
+  install_awscli:
+  description: Install AWS cli
+  steps:
+    - run:
+        name: Install AWS cli
+        command: |
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+  install_ansible:
+    description: Install Ansible
+    steps:
+      - run:
+          name: Install Ansible
+          command: |
+            sudo apt update
+            sudo apt install software-properties-common -y
+            sudo add-apt-repository --yes --update ppa:ansible/ansible
+            sudo apt install ansible -y
+  install_nodejs:
+    description: Install Node.js 13
+    steps:
+      - run:
+          name: Install Node.js 13
+          command: |
+            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+            sudo apt install -y nodejs
 jobs:
   build-frontend:
     docker:
@@ -352,7 +379,8 @@ jobs:
       # Here's where you will add some code to rollback on failure 
   deploy-backend:
     docker:
-      - image: python:3.7-alpine3.11
+      - image: cimg/base:stable
+      #- image: python:3.7-alpine3.11
       # Docker image here that supports Ansible
     steps:
       - checkout
@@ -362,12 +390,15 @@ jobs:
           at: ~/
       # Add ssh keys with fingerprint for login to ec2 server
       # attach workspace
-      - run:
-          name: Install dependencies
-          command: |
-            apk add --update nodejs npm
-            apk add --update ansible
-            pip install awscli
+      #- run:
+       #   name: Install dependencies
+        #  command: |
+        #    apk add --update nodejs npm
+         #   apk add --update ansible
+          #  pip install awscli
+      - install_nodejs
+      - install_awscli
+      - install_ansible
       - run:
           name: create an artifact.tar.gz of the backend
           command: |
@@ -400,20 +431,23 @@ jobs:
        
   smoke-test:
     docker:
-       - image: amazon/aws-cli
+        - image: cimg/base:stable
+       #- image: amazon/aws-cli
        #- image: alpine:latest
        # Lightweight Docker images 
     steps:
       - checkout
-      - run:
-          name: Install dependencies
-          command: |
-             yum update -y
-             yum install curl
-             yum install -y tar gzip
-            # yum install nodejs npm
-            #yum install -y python3-pip
-            #apk add --update curl    
+      - install_nodejs
+      - install_awscli
+      #- run:
+        ##  name: Install dependencies
+       #   command: |
+        #     yum update -y
+         #    yum install curl
+          #   yum install -y tar gzip
+                  # yum install nodejs npm
+                  #yum install -y python3-pip
+                  #apk add --update curl    
       - run:
           name: Get backend url
           command: |
@@ -429,7 +463,6 @@ jobs:
           name: Backend smoke test.
           command: |
               if curl -s ${API_URL}/api/status | grep "ok"
-            
               then
                   exit 0
               else
