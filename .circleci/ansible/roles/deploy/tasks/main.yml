@@ -15,8 +15,8 @@
   changed_when: false
 
 - name: "start Node app"
-  become: true
-  become_user: root
+  #become: true
+  #become_user: root
   command: forever start /home/ubuntu/backend/dist/main.js
   when: 
     "forever_list.stdout.find('/home/ubuntu/backend/dist/main.js')==-1"
