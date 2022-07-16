@@ -18,7 +18,8 @@
   become: true
   become_user: root
   command: |
-      cd /home/ubuntu/backend/
+      cd /home/ubuntu/backend
+      pwd
       forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
     #forever start /home/ubuntu/backend/dist/main.js
       #forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js
