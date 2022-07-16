@@ -17,11 +17,9 @@
 - name: "start Node app"
   become: true
   become_user: root
-  command: 
-    cd /home/ubuntu/backend/
-    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js    #forever start /home/ubuntu/backend/dist/main.js
+  command: forever start /home/ubuntu/backend/dist/main.js
   when: 
-    "forever_list.stdout.find('/home/ubuntu/backend/')==-1"
+    "forever_list.stdout.find('/home/ubuntu/backend/dist/main.js')==-1"
 
 - name: Find out playbooks path
   shell: |
