@@ -26,8 +26,8 @@
     name: ts-node
     global: yes
 
-#- name: "move env variables to /etc/profile.d/"
- # become: true
-  #copy:
-   # src: env.sh
-   # dest: /etc/profile.d/
+- name: "move env variables to /etc/profile.d/"
+  become: true
+  copy:
+    src: env.sh
+    dest: /etc/profile.d/
