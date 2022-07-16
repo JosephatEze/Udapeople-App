@@ -15,9 +15,13 @@
   changed_when: false
 
 - name: "start Node app"
-  #become: true
-  #become_user: root
-  command: forever start /home/ubuntu/backend/dist/main.js
+  become: true
+  become_user: root
+  command: |
+      cd /home/ubuntu/backend/
+      forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
+    #forever start /home/ubuntu/backend/dist/main.js
+      #forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js
   when: 
     "forever_list.stdout.find('/home/ubuntu/backend/dist/main.js')==-1"
   register: execute_node
@@ -51,7 +55,7 @@
    #become_user: root
    #command: |
     # cd ~/backend/dist
-    # forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" main.js
+    # forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
     
     
     
