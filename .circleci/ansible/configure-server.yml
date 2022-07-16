@@ -18,7 +18,7 @@
 
     - name: "install python for Ansible."
       become: true
-      raw: test -e /usr/bin/python3 || (apt install -y python3  &&  apt -y update  )
+      raw: test -e /usr/bin/python3 || (apt -y update && apt install -y python3    )
       changed_when: false
   # Get the environment variables from CircleCI and add to the EC2 instance 
   environment:
@@ -31,8 +31,8 @@
     - TYPEORM_PASSWORD: "{{ lookup('env', 'TYPEORM_PASSWORD')}}" 
     - TYPEORM_PORT: "{{ lookup('env', 'TYPEORM_PORT')}}" 
     - TYPEORM_USERNAME: "{{ lookup('env', 'TYPEORM_USERNAME')}}" 
-    # Add more env vars here
+
   roles:
       - configure-server
       - configure-prometheus-node-exporter
-    # Your code here
+    
