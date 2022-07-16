@@ -20,6 +20,11 @@
   command: forever start /home/ubuntu/backend/dist/main.js
   when: 
     "forever_list.stdout.find('/home/ubuntu/backend/dist/main.js')==-1"
+  register: execute_node
+
+- name: print message
+  debug:
+    msg: "{{ execute_node.stdout_lines }}"
 
 - name: Find out playbooks path
   shell: |
