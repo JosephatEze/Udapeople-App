@@ -438,7 +438,9 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            # your code here
+            export BACKEND_IP=$(aws ec2 describe-instances  --query 'Reservations[*].Instances[*].PublicIpAddress' --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" --output text)
+              export API_URL="http://${BACKEND_IP}:3030"
+              echo "${API_URL}"  
       - run:
           name: Backend smoke test.
           command: |
@@ -446,7 +448,7 @@ jobs:
               --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
               --output text)
-            export API_URL=http://${BACKEND_PUBLIC_IP}:3030
+            export API_URL=http://${BACKEND_IP}:3030
             echo ${BACKEND_PUBLIC_IP}
             echo backend-${CIRCLE_WORKFLOW_ID:0:7}
             echo ${API_URL}
@@ -506,8 +508,8 @@ jobs:
           event: pass
           mentions: '@DevOpsTeam'
           template: basic_success_1 
-      - destroy-environment
-      - revert-migrations
+      #- destroy-environment
+      #- revert-migrations
 
   cleanup:
     docker:
