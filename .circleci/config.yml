@@ -231,7 +231,7 @@ jobs:
         # mentions: '@DevOpsTeam'
         # template: basic_success_1 
       - destroy-environment
-      # Here's where you will add some code to rollback on failure  
+      # Here's where you will add some code to rollback on failure here 
        
 
   configure-infrastructure:
