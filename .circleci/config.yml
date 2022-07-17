@@ -359,7 +359,7 @@ jobs:
     docker:
       - image: cimg/base:stable
     steps:
-      # Add ssh keys with fingerprint here
+      # Add ssh keys with fingerprint
       # attach workspace
       - checkout
       - add_ssh_keys:
