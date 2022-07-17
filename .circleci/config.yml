@@ -213,11 +213,11 @@ jobs:
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text --filter Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7} >> inventory.txt
             cat inventory.txt
-            export UDAPEOPLE_BACKEND_IP=$(aws ec2 describe-instances \
+            export BACKEND_IP=$(aws ec2 describe-instances \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --filter Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7} \
             --output text )
-            echo ${UDAPEOPLE_BACKEND_IP}
+            echo ${BACKEND_IP}
       - persist_to_workspace:
           root: ~/
           paths:
@@ -486,7 +486,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install dep and Save Old Workflow ID to kvdb.io
+          name:  Save Old Workflow ID to kvdb.io
           command: |
             export OLD_WORKFLOW_ID=$(aws cloudformation \
             list-exports --query "Exports[?Name==\`WorkflowID\`].Value" \
@@ -500,7 +500,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
               --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --stack-name InitialStack
+              --stack-name udapeople
       - slack/notify:
           event: fail
           mentions: '@DevOpsTeam'
