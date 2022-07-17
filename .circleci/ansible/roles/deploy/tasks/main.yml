@@ -1,71 +1,38 @@
 ---
 - name: "Creates backend app directory"
   file:
-    path: ~/backend
+    path: ~/backend-app
     state: directory
 
 - name: "Unarchive backend files"
   unarchive:
-    src: "{{playbook_dir}}/files/artifact.tar.gz"
-    dest: ~/backend
+    src: artifact.tar.gz
+    dest: ~/backend-app
 
-- name: "check list of node.js apps running"
-  command: forever list
-  register: forever_list
-  changed_when: false
-
-- name: "start Node app"
-  #become: true
-  #become_user: root
+- name: "Installing Node Dependencies"
   shell: |
-    cd /home/ubuntu/backend
-    pwd
+    cd ~/backend-app
+    npm i
+- name: "Executing Node app with PM2"
+  shell: |
+    cd ~/backend-app/dist
+
+    cd ../
+    npm install
+
+    npm run build
+
+    sudo npm install forever -g
+    sudo npm install ts-node -g
     forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
-    forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" dist/main.js 
-  when: 
-    "forever_list.stdout.find('/home/ubuntu/backend/dist/main.js')==-1"
+    
   register: execute_node
 
 - name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
 
-- name: Find out playbooks path
+- name: "Configure pm2 to start as service"
+  become: true
   shell: |
-    cd /home/ubuntu/backend/
-    pwd
-    ls 
-  register: playbook_path_output
-- debug: 
-    var: playbook_path_output.stdout
-
-
-
-#forever start /home/ubuntu/backend/dist/main.js
-
-
- #- name: "Installing Node Dependencies"
-  # shell: |
-    # cd ~/ubuntu/backend
-     #npm install
-     #sudo npm install forever -g
-    # sudo npm install ts-node -g
- #- name: "start Node app"
-   #become: true
-   #become_user: root
-   #command: |
-    # cd ~/backend/dist
-    # forever start -c "ts-node -r tsconfig-paths/register -r dotenv/config src/main.ts" ./
-    
-    
-    
-   #register: execute_node
-
- #- name: print message
-  # debug:
-    # msg: "{{ execute_node.stdout_lines }}"
-
- #- name: "Configure pm2 to start as service"
-  # become: true
-  # shell: |
-    # env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
+    env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
