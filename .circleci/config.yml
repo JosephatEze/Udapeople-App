@@ -313,6 +313,11 @@ jobs:
             npm install
             npm run build
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
+      - run:
+          name: delete bucket objects
+          when: on_fail
+          command: |
+             aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       - destroy-environment
       - revert-migrations
                     
@@ -334,9 +339,9 @@ jobs:
               curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
               sudo apt install -y nodejs
               
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
+              curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+              unzip awscliv2.zip
+              sudo ./aws/install
       - run:
            name: Install dependencies(ANSIBLE)
            command: |
@@ -367,7 +372,11 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
 
-
+      - run:
+          name: delete bucket objects
+          when: on_fail
+          command: |
+            aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       - destroy-environment
       - revert-migrations
 
