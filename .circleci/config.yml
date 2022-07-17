@@ -6,17 +6,6 @@ orbs:
 
 commands:
 
-  install_ansible:
-    description: Install Ansible
-    steps:
-      - run:
-          name: Install Ansible
-          command: |
-            sudo apt update
-            sudo apt install software-properties-common -y
-            sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible -y
-
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
     steps:
@@ -28,16 +17,7 @@ commands:
             aws cloudformation delete-stack --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}"  
             aws cloudformation delete-stack --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}"
             
-  install_awscli:
-    description: Install AWS cli
-    steps:
-      - run:
-          name: Install AWS cli
-          command: |
-            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-            unzip awscliv2.zip
-            sudo ./aws/install
-  revert-migrations:
+   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     # parameters:
       # Add parameter here     
@@ -56,15 +36,6 @@ commands:
              npm run migration:revert
             fi
             
-  install_nodejs:
-    description: Install Node.js 13
-    steps:
-      - run:
-          name: Install Node.js 13
-          command: |
-            curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-            sudo apt install -y nodejs
-
 jobs:
   build-frontend:
     docker:
@@ -82,6 +53,14 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevelopmentTeam'
+          template: basic_success_1 
 
   build-backend:
     docker:
@@ -99,6 +78,14 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevelopmentTeam'
+          template: basic_success_1 
   test-frontend:
     docker:
       - image: circleci/node:13.8.0
@@ -112,6 +99,14 @@ jobs:
             cd frontend
             npm install
             npm run test
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      #- slack/notify:
+       #   event: pass
+        #  mentions: '@DevelopmentTeam'
+        #  template: basic_success_1 
                 
   test-backend:
     docker:
@@ -126,6 +121,14 @@ jobs:
             cd backend
             npm install
             npm run test
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      #- slack/notify:
+       #   event: pass
+         # mentions: '@DevelopmentTeam'
+         # template: basic_success_1 
 
   scan-frontend:
     docker:
@@ -144,6 +147,14 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-scan
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      #- slack/notify:
+       #   event: pass
+        #  mentions: '@DevelopmentTeam'
+        #  template: basic_success_1 
       
   scan-backend:
     docker:
@@ -161,14 +172,20 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-scan
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      #- slack/notify:
+         # event: pass
+         # mentions: '@DevelopmentTeam'
+         # template: basic_success_1     
       
   deploy-infrastructure:
     docker:
       - image: amazon/aws-cli
-      #- image: cimg/base:stable
-    steps:
+       steps:
       - checkout
-      #- install_awscli
       - run: yum install -y tar gzip 
       - run:
           name: Ensure back-end infrastructure exists
@@ -178,9 +195,7 @@ jobs:
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-              
-          # echo ${CIRCLE_WORKFLOW_ID:0:7}
-              
+                            
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -188,8 +203,7 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project=udapeople \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"  
-              
+              --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:7}"                
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -208,6 +222,14 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+      - slack/notify:
+          event: fail
+          mentions: '@DevOpsTeam'
+          template: basic_fail_1
+      #- slack/notify:
+        #  event: pass
+         # mentions: '@DevOpsTeam'
+         # template: basic_success_1 
       - destroy-environment
       # Here's where you will add some code to rollback on failure  
        
@@ -228,22 +250,24 @@ jobs:
             sudo apt update
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
-            sudo ./aws/install
-
-            
+            sudo ./aws/install          
             sudo apt install software-properties-common -y
             sudo add-apt-repository --yes --update ppa:ansible/ansible
-            sudo apt install ansible -y
-      #- install_awscli
-      #- install_ansible
-            
+            sudo apt install ansible -y                  
       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
             cat inventory.txt
-
             ansible-playbook -i inventory.txt configure-server.yml
+      - slack/notify:
+          event: fail
+          mentions: '@DevOpsTeam'
+          template: basic_fail_1
+      #- slack/notify:
+       #   event: pass
+        #  mentions: '@DevOpsTeam'
+         # template: basic_success_1 
       - destroy-environment      
 
   run-migrations:
@@ -263,15 +287,22 @@ jobs:
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
              curl --insecure https://kvdb.io/K9eP7c18yzzvrVqhXAynsC/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
-            fi 
+            fi
+      - slack/notify:
+          event: fail
+          mentions: '@DevOpsTeam'
+          template: basic_fail_1
+      #- slack/notify:
+        #  event: pass
+        #  mentions: '@DevOpsTeam'
+         # template: basic_success_1  
       - revert-migrations 
       - destroy-environment    
 
   deploy-frontend:
     docker:
       - image: python:3.7-alpine3.11
-      #- image: cimg/base:stable
-    steps:
+         steps:
       - checkout
 
       - add_ssh_keys:
@@ -285,12 +316,6 @@ jobs:
             apk add --update ansible
             pip install awscli
             apk add --update nodejs npm
-          # curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-           #sudo apt install -y nodejs
-           # apk add --update nodejs npm
-      #- install_nodejs
-      #- install_awscli
-      #- install_ansible
         
       - run:
           name: Get backend url
@@ -319,6 +344,14 @@ jobs:
           when: on_fail
           command: |
              aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      #- slack/notify:
+       #   event: pass
+         # mentions: '@DevelopmentTeam'
+         # template: basic_success_1 
       - destroy-environment
       - revert-migrations
                     
@@ -351,9 +384,7 @@ jobs:
               sudo add-apt-repository --yes --update ppa:ansible/ansible
               sudo apt install ansible -y
         #       apk add --update ansible
-      #- install_nodejs
-      #- install_awscli
-      #- install_ansible
+     
       - run:
           name: create an artifact.tar.gz of the backend
           command: |
@@ -378,6 +409,14 @@ jobs:
           when: on_fail
           command: |
             aws s3 rm "s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
+      - slack/notify:
+          event: fail
+          mentions: '@DevOpsTeam'
+          template: basic_fail_1
+      #- slack/notify:
+      #    event: pass
+       #   mentions: '@DevOpsTeam'
+        #  template: basic_success_1 
       - destroy-environment
       - revert-migrations
 
@@ -421,6 +460,14 @@ jobs:
             else
               exit 1
             fi
+      - slack/notify:
+          event: fail
+          mentions: '@DevOpsTeam'
+          template: basic_fail_1
+      #- slack/notify:
+       #   event: pass
+        #  mentions: '@DevOpsTeam'
+        #  template: basic_success_1 
       - destroy-environment
       - revert-migrations
 
@@ -444,13 +491,20 @@ jobs:
             --template-file .circleci/files/cloudfront.yml \
             --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
             --stack-name InitialStack
+      - slack/notify:
+          event: fail
+          mentions: '@DevOpsTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          mentions: '@DevOpsTeam'
+          template: basic_success_1 
       - destroy-environment
       - revert-migrations
 
   cleanup:
     docker:
       - image: cimg/base:stable
-
     steps:
       - checkout
       - install_awscli
@@ -477,6 +531,15 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
+      - slack/notify:
+          event: fail
+          mentions: '@DevelopmentTeam'
+          template: basic_fail_1
+      #- slack/notify:
+       #   event: pass
+       #   mentions: '@DevelopmentTeam'
+       #   template: basic_success_1 
+      
 
 
 workflows:
