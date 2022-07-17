@@ -12,7 +12,6 @@
     remote_src: yes
     mode: '0777'
     
-
 - name: "add node exporter configuration."
   become: true
   copy:

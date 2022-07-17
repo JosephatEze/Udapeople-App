@@ -15,8 +15,19 @@
     name: pm2
     global: yes
 
+- name: "Install forever Globally to run node app"
+  npm:
+    name: forever
+    global: yes
+    state: present
+
+- name: "Install ts-node Globally"
+  npm:
+    name: ts-node
+    global: yes
+
 - name: "move env variables to /etc/profile.d/"
   become: true
   copy:
-    src: myenv.sh
+    src: env.sh
     dest: /etc/profile.d/
