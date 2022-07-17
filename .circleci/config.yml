@@ -283,9 +283,8 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-            apk add --update nodejs npm
             pip install awscli
-            pip install curl
+            apk add --update nodejs npm
           # curl -fsSL https://deb.nodesource.com/setup_13.x | sudo -E bash -
            #sudo apt install -y nodejs
            # apk add --update nodejs npm
