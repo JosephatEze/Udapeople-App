@@ -28,15 +28,3 @@
 - name: print message
   debug:
     msg: "{{ execute_node.stdout_lines }}"
-
-#- name: "Configure pm2 to start as service"
- # become: true
- # shell: |
-  #  env PATH=$PATH:/usr/local/bin pm2 startup systemd -u ubuntu --hp /home/ubuntu
-
-
-
-
-
-  # sudo npm install forever -g
-   # sudo npm install ts-node -g
