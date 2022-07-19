@@ -20,3 +20,14 @@
   copy:
     src: env.sh
     dest: /etc/profile.d/
+
+- name: "Install forever Globally to run node app"
+  npm:
+    name: forever
+    global: yes
+    state: present
+
+- name: "Install ts-node Globally"
+  npm:
+    name: ts-node
+    global: yes
