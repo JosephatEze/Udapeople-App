@@ -1,0 +1,3 @@
+github url: https://github.com/JosephatEze/Udapeople-App.git
+S3 bucket url: http://udapeople-128fe08.s3-website-us-east-1.amazonaws.com
+cloudfront url: https://d16vl5yc4awkcw.cloudfront.net
