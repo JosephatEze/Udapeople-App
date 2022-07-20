@@ -550,7 +550,7 @@ jobs:
             export OldWorkflowID=$(curl --insecure https://kvdb.io/K9eP7c18yzzvrVqhXAynsC/old_workflow_id)
             echo Old Workflow ID: $OldWorkflowID 
 
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            if [[ "${STACKS[@]}" == "${OldWorkflowID}" ]]
             then
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
